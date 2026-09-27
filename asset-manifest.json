@@ -1,0 +1,37 @@
+[
+  {
+    "file": "assets/05_dashboard_dark.jpeg",
+    "sha256": "6b9257ee03112770d07976c9e00f9a08dac2c2648312da42e4091c22135784ac",
+    "source": "owner supplied physical-device screenshot"
+  },
+  {
+    "file": "assets/06_dashboard_light.jpeg",
+    "sha256": "d25f8221c7e9fff3a9ae19364e33e058916797b9a1c5a0ed0c041a41d5269bc8",
+    "source": "owner supplied physical-device screenshot"
+  },
+  {
+    "file": "assets/02_product_detail_sugar.jpeg",
+    "sha256": "2c329346be5c489fb948309f7ef5f4864997c332e2619ea4c0a62eb3a0bdecd1",
+    "source": "owner supplied physical-device screenshot"
+  },
+  {
+    "file": "assets/01_price_history_charts.jpeg",
+    "sha256": "bbb15d689c6898c1415b4daa7cbe813d23d7beacb9497f650723f1a5c267b439",
+    "source": "owner supplied physical-device screenshot"
+  },
+  {
+    "file": "assets/03_market_pulse_daraa.jpeg",
+    "sha256": "d0e71f223a2a9c67d2f40c23e4311a272b1ec45b786a0b0241aadc41b89e0bfe",
+    "source": "owner supplied physical-device screenshot"
+  },
+  {
+    "file": "assets/10_atlas_map_daraa.jpeg",
+    "sha256": "c56f74a0edb83a3d0dc6b0f8c92ef6d8aad7006e10b55c7970fe6760abc8d634",
+    "source": "owner supplied physical-device screenshot"
+  },
+  {
+    "file": "assets/08_contributor_impact.jpeg",
+    "sha256": "738e11654e2717be7e979114164a7046f1c5b5876f35bba5085f81eea20f279a",
+    "source": "owner supplied physical-device screenshot"
+  }
+]

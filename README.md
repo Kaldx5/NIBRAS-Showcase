@@ -41,3 +41,42 @@ All rights reserved for the original NIBRAS materials. No permission to reuse th
 <img src="assets/05_dashboard_dark.jpeg" width="230" alt="Real-device dashboard capture"> <img src="assets/10_atlas_map_daraa.jpeg" width="230" alt="Real-device atlas capture"> <img src="assets/02_product_detail_sugar.jpeg" width="230" alt="Real-device price-history capture">
 
 The design selection adds offline workflows, trust, contribution, store comparison, regions, merchants, business reporting and operations. HTML files render through the live gallery; GitHub itself displays HTML source rather than running it inside a README.
+
+
+
+## Eight design studies, shown here
+
+These are captures of the selected HTML studies, with example content. They sit alongside the physical-device captures above. Open each image for the full view, or follow its link to explore the HTML.
+
+### Offline and queued work
+
+[<img src="assets/design/offline.png" width="320" alt="Offline and queued work: selected HTML design study">](https://kaldx5.github.io/NIBRAS-Showcase/design/screens/offline.html)
+
+### Trust and transparency
+
+[<img src="assets/design/trust_transparency.png" width="320" alt="Trust and transparency: selected HTML design study">](https://kaldx5.github.io/NIBRAS-Showcase/design/screens/trust_transparency.html)
+
+### Contributing an observation
+
+[<img src="assets/design/add_price.png" width="320" alt="Contributing an observation: selected HTML design study">](https://kaldx5.github.io/NIBRAS-Showcase/design/screens/add_price.html)
+
+### Comparing stores
+
+[<img src="assets/design/store_compare.png" width="320" alt="Comparing stores: selected HTML design study">](https://kaldx5.github.io/NIBRAS-Showcase/design/screens/store_compare.html)
+
+### Choosing local context
+
+[<img src="assets/design/region_picker.png" width="320" alt="Choosing local context: selected HTML design study">](https://kaldx5.github.io/NIBRAS-Showcase/design/screens/region_picker.html)
+
+### Merchant onboarding
+
+[<img src="assets/design/merchant_onboard.png" width="320" alt="Merchant onboarding: selected HTML design study">](https://kaldx5.github.io/NIBRAS-Showcase/design/screens/merchant_onboard.html)
+
+### Business reporting
+
+[<img src="assets/design/b2b_report.png" width="320" alt="Business reporting: selected HTML design study">](https://kaldx5.github.io/NIBRAS-Showcase/design/screens/b2b_report.html)
+
+### Operations and governance
+
+[<img src="assets/design/ops_governance.png" width="320" alt="Operations and governance: selected HTML design study">](https://kaldx5.github.io/NIBRAS-Showcase/design/screens/ops_governance.html)
+

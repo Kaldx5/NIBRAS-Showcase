@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl" data-theme="dark" class="tier-rich">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إدراج تاجر — نِبراس</title>
+<script>(function(){try{var p=new URLSearchParams(location.search),d=document.documentElement;var t=p.get('tier'),th=p.get('theme'),l=p.get('lang');if(t){d.className='tier-'+t;}if(th){d.setAttribute('data-theme',th);}if(l){d.setAttribute('lang',l);d.setAttribute('dir',l==='en'?'ltr':'rtl');}}catch(e){}})();</script>
+
+<link rel="stylesheet" href="../lib/fonts.css">
+<link rel="stylesheet" href="../material_tokens.css">
+<link rel="stylesheet" href="../material_components.css">
+<link rel="stylesheet" href="../material_screens.css">
+<link rel="stylesheet" href="../material_motion.css">
+<script src="../lib/switcher.js" defer></script>
+<style>
+  /* ─── تخطيط محليّ — var() فقط، صفر hex ─── */
+  .mo-hero{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:var(--space-sm);
+    padding:var(--space-lg) var(--space-md) var(--space-md);
+    text-align:center;
+  }
+  .mo-hero__emblem{
+    width:64px;
+    height:64px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:var(--radius-pill);
+    background:var(--accent-brand-tint);
+    color:var(--accent-brand);
+    flex-shrink:0;
+  }
+  .mo-hero__emblem svg{ width:38px; height:38px; display:block; }
+  .mo-hero__title{
+    font-family:var(--font-ar-brand);
+    font-size:var(--type-title-large-size);
+    font-weight:700;
+    color:var(--ink-primary);
+    line-height:1.2;
+  }
+  .mo-hero__sub{
+    font-family:var(--font-ar-body);
+    font-size:var(--type-body-size);
+    color:var(--ink-secondary);
+    max-width:320px;
+  }
+
+  .mo-form{
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-lg);
+    padding-inline:var(--space-md);
+  }
+
+  /* callout — نوع «معلومة مبدأيّة» (صلب، لا glass) */
+  .mo-callout{
+    display:flex;
+    align-items:flex-start;
+    gap:var(--space-md);
+    background:var(--accent-brand-tint);
+    border:1px solid var(--accent-brand);
+    border-radius:var(--radius-md);
+    padding:var(--space-md);
+  }
+  .mo-callout__icon{
+    width:36px;
+    height:36px;
+    flex-shrink:0;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:var(--radius-sm);
+    background:var(--accent-brand-tint);
+    color:var(--accent-brand);
+  }
+  .mo-callout__icon svg{ width:20px; height:20px; display:block; }
+  .mo-callout__body{
+    flex:1;
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-xs);
+  }
+  .mo-callout__title{
+    font-family:var(--font-ar-body);
+    font-size:var(--type-caption-size);
+    font-weight:700;
+    color:var(--ink-primary);
+  }
+  .mo-callout__text{
+    font-family:var(--font-ar-body);
+    font-size:var(--type-caption-size);
+    color:var(--ink-primary);
+    line-height:1.5;
+  }
+
+  /* مساحة التمرير تحت نموذج التقديم */
+  .mo-scroll{
+    flex:1;
+    overflow-y:auto;
+    padding-block-end:var(--space-2xl);
+  }
+  .mo-scroll > * + *{ margin-block-start:var(--space-lg); }
+
+  /* select chevron RTL */
+  .field__box--select{ position:relative; }
+  .field__box--select .field__control{ padding-inline-end:var(--space-xl); }
+  .field__box--select .field__affix{ position:absolute; inset-inline-end:var(--space-md); pointer-events:none; }
+</style>
+</head>
+<body><aside style="padding:12px;background:#241c0f;color:#ffe5a7;text-align:center;font:14px system-ui">Selected design demonstration · Example data · Not a live service</aside>
+<div class="app-frame app-frame--tall mo-page">
+
+  
+  <div class="status-bar">
+    <span class="status-bar__time bidi-num">٩:٤١</span>
+    <span class="status-bar__icons" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h.01M6 20v-2M10 20v-5M14 20v-8M18 20v-11"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13a10 10 0 0 1 14 0M8.5 16.5a5 5 0 0 1 7 0M12 20h.01"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/></svg>
+    </span>
+  </div>
+
+  
+  <header class="app-topbar">
+    <button class="icon-btn mo-press" type="button"
+            aria-label="رجوع"
+            data-ar-label="رجوع" data-en-label="Back"
+            data-ar="رجوع" data-en="Back">
+      
+      <svg class="icon-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 6l6 6-6 6"/>
+      </svg>
+    </button>
+    <h1 class="app-topbar__title"
+        data-ar="انضمّ كتاجر" data-en="Join as Merchant">انضمّ كتاجر</h1>
+  </header>
+
+  
+  <div class="mo-scroll">
+
+    
+    <section class="mo-hero" aria-labelledby="mo-hero-title">
+      
+      <div class="mo-hero__emblem" role="img" aria-label="شعار نِبراس — مصباح"
+           data-ar-label="شعار نِبراس — مصباح" data-en-label="Nibras logo — lamp">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 2.5 C10 7.5,15.5 9.5,15.25 14 C15.1 17.5,12.25 19.75,9.75 18.5 C12 18.1,13.5 16.5,13 13.75 C12.1 9.5,9.25 7,13.5 2.5 Z"/><path d="M10.5 21.5 C14 16.5,8.5 14.5,8.75 10 C8.9 6.5,11.75 4.25,14.25 5.5 C12 5.9,10.5 7.5,11 10.25 C11.9 14.5,14.75 17,10.5 21.5 Z" opacity=".5"/></svg>
+      </div>
+      <h2 class="mo-hero__title" id="mo-hero-title"
+          data-ar="سجِّل متجرك في نِبراس" data-en="Register your store in Nibras">
+        سجِّل متجرك في نِبراس
+      </h2>
+      <p class="mo-hero__sub"
+         data-ar="مجّاني بالكامل — أسعارك تظهر جنباً إلى جنب مع جميع المصادر"
+         data-en="Completely free — your prices appear alongside all other sources">
+        مجّاني بالكامل — أسعارك تظهر جنباً إلى جنب مع جميع المصادر
+      </p>
+    </section>
+
+    
+    <form class="mo-form mo-stagger" onsubmit="return false" novalidate
+          aria-label="نموذج إدراج تاجر"
+          data-ar-label="نموذج إدراج تاجر" data-en-label="Merchant onboarding form">
+
+      
+      <div class="field">
+        <label class="field__label" for="mo-store-name"
+               data-ar="اسم المتجر" data-en="Store name">اسم المتجر</label>
+        <div class="field__box">
+          <input class="field__control" id="mo-store-name" type="text"
+                 autocomplete="organization"
+                 placeholder="مثال: بقالية التاجر المحلّيّ"
+                 data-placeholder-ar="مثال: بقالية التاجر المحلّيّ"
+                 data-placeholder-en="e.g. Abu Khalid grocery"
+                 aria-label="اسم المتجر"
+                 data-ar-label="اسم المتجر" data-en-label="Store name"
+                 minlength="2" maxlength="80" required>
+        </div>
+        <span class="field__hint"
+              data-ar="الاسم الذي يعرفك به زبائنك"
+              data-en="The name your customers know you by">
+          الاسم الذي يعرفك به زبائنك
+        </span>
+      </div>
+
+      
+      <div class="field">
+        <label class="field__label" for="mo-store-type"
+               data-ar="نوع المتجر" data-en="Store type">نوع المتجر</label>
+        <div class="field__box field__box--select">
+          <select class="field__control" id="mo-store-type"
+                  aria-label="نوع المتجر"
+                  data-ar-label="نوع المتجر" data-en-label="Store type" required>
+            <option value="" disabled selected
+                    data-ar="اختر النوع" data-en="Choose type">اختر النوع</option>
+            <option value="grocery"
+                    data-ar="بقالية / مواد غذائية"
+                    data-en="Grocery / food products">بقالية / مواد غذائية</option>
+            <option value="butchery"
+                    data-ar="ملحمة / دجاج"
+                    data-en="Butchery / poultry">ملحمة / دجاج</option>
+            <option value="bakery"
+                    data-ar="مخبز / حلويات"
+                    data-en="Bakery / sweets">مخبز / حلويات</option>
+            <option value="vegetables"
+                    data-ar="خضرجي / فواكه"
+                    data-en="Greengrocery / fruit">خضرجي / فواكه</option>
+            <option value="pharmacy"
+                    data-ar="صيدلية"
+                    data-en="Pharmacy">صيدلية</option>
+            <option value="fuel"
+                    data-ar="محطة وقود / غاز"
+                    data-en="Fuel station / gas">محطة وقود / غاز</option>
+            <option value="feed"
+                    data-ar="أعلاف / مستلزمات زراعية"
+                    data-en="Feed / agricultural supplies">أعلاف / مستلزمات زراعية</option>
+            <option value="other"
+                    data-ar="أخرى"
+                    data-en="Other">أخرى</option>
+          </select>
+          <span class="field__affix" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+                 stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      
+      <div class="field">
+        <label class="field__label" for="mo-district"
+               data-ar="الحي / المنطقة" data-en="District / area">الحي / المنطقة</label>
+        <div class="field__box field__box--select">
+          <select class="field__control" id="mo-district"
+                  aria-label="الحي أو المنطقة"
+                  data-ar-label="الحي أو المنطقة" data-en-label="District or area" required>
+            <option value="" disabled selected
+                    data-ar="اختر الموقع" data-en="Choose location">اختر الموقع</option>
+            
+            <optgroup label="درعا البلد">
+              <option value="mahatta"    data-ar="المحطة"       data-en="Al-Mahatta">المحطة</option>
+              <option value="balad-qibli" data-ar="البلد القبلي" data-en="Al-Balad Al-Qibli">البلد القبلي</option>
+              <option value="balad-shimali" data-ar="البلد الشمالي" data-en="Al-Balad Al-Shimali">البلد الشمالي</option>
+              <option value="sijn"       data-ar="السجن"        data-en="Al-Sijn">السجن</option>
+            </optgroup>
+            
+            <optgroup label="درعا المدينة">
+              <option value="saraya"     data-ar="السرايا"      data-en="Al-Saraya">السرايا</option>
+              <option value="matar"      data-ar="المطار"       data-en="Al-Matar">المطار</option>
+              <option value="manshiye"   data-ar="المنشية"      data-en="Al-Manshiye">المنشية</option>
+            </optgroup>
+            
+            <optgroup label="ريف درعا — حوران">
+              <option value="nawa"       data-ar="نوى"          data-en="Nawa">نوى</option>
+              <option value="izra"       data-ar="إزرع"         data-en="Izra">إزرع</option>
+              <option value="sheikh-maskin" data-ar="الشيخ مسكين" data-en="Sheikh Miskin">الشيخ مسكين</option>
+              <option value="jasim"      data-ar="جاسم"         data-en="Jasim">جاسم</option>
+              <option value="tafas"      data-ar="طفس"          data-en="Tafas">طفس</option>
+              <option value="nahta"      data-ar="النعيمة"      data-en="Al-Naima">النعيمة</option>
+              <option value="dael"       data-ar="داعل"         data-en="Dael">داعل</option>
+              <option value="inkhil"     data-ar="انخل"         data-en="Inkhil">انخل</option>
+              <option value="busra"      data-ar="بصرى الشام"   data-en="Bosra Al-Sham">بصرى الشام</option>
+              <option value="other-rural" data-ar="منطقة أخرى" data-en="Other area">منطقة أخرى</option>
+            </optgroup>
+          </select>
+          <span class="field__affix" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+                 stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </span>
+        </div>
+        <span class="field__hint"
+              data-ar="يساعد المشترين القريبين منك على إيجادك"
+              data-en="Helps nearby buyers find you">
+          يساعد المشترين القريبين منك على إيجادك
+        </span>
+      </div>
+
+      
+      <div class="field">
+        <label class="field__label" for="mo-phone"
+               data-ar="رقم الهاتف" data-en="Phone number">رقم الهاتف</label>
+        <div class="field__box">
+          
+          <span class="field__affix" style="flex-shrink:0; user-select:none;"
+                aria-hidden="true">+٩٦٣</span>
+          <input class="field__control" id="mo-phone" type="tel"
+                 autocomplete="tel-national"
+                 placeholder="٩٣٣ ٤٤٤ ٥٥٥"
+                 data-placeholder-ar="٩٣٣ ٤٤٤ ٥٥٥"
+                 data-placeholder-en="933 444 555"
+                 inputmode="numeric"
+                 dir="ltr"
+                 style="text-align:start"
+                 aria-label="رقم الهاتف بدون رمز الدولة"
+                 data-ar-label="رقم الهاتف بدون رمز الدولة" data-en-label="Phone number without country code"
+                 maxlength="14" required>
+        </div>
+        <span class="field__hint"
+              data-ar="للتحقّق فقط — لا يُعرَض علناً"
+              data-en="For verification only — not shown publicly">
+          للتحقّق فقط — لا يُعرَض علناً
+        </span>
+      </div>
+
+      
+      <div class="field">
+        <label class="field__label" for="mo-license"
+               data-ar="رقم السجل التجاري" data-en="Commercial license number">رقم السجل التجاري</label>
+        <div class="field__box">
+          <input class="field__control" id="mo-license" type="text"
+                 autocomplete="off"
+                 placeholder="مثال: ١٢٣٤٥٦"
+                 data-placeholder-ar="مثال: ١٢٣٤٥٦"
+                 data-placeholder-en="e.g. 123456"
+                 aria-label="رقم السجل التجاري"
+                 data-ar-label="رقم السجل التجاري" data-en-label="Commercial license number"
+                 inputmode="numeric"
+                 maxlength="20" required>
+        </div>
+        <span class="field__hint"
+              data-ar="كما يظهر في وثيقة التسجيل الرسمية"
+              data-en="As shown on your official registration document">
+          كما يظهر في وثيقة التسجيل الرسمية
+        </span>
+      </div>
+
+      
+      <div class="field">
+        <label class="field__label" for="mo-owner-id"
+               data-ar="رقم هوية المالك" data-en="Owner identity number">رقم هوية المالك</label>
+        <div class="field__box">
+          <input class="field__control" id="mo-owner-id" type="text"
+                 autocomplete="off"
+                 placeholder="مثال: ٠١-٢٣٤٥٦٧٨"
+                 data-placeholder-ar="مثال: ٠١-٢٣٤٥٦٧٨"
+                 data-placeholder-en="e.g. 01-2345678"
+                 aria-label="رقم هوية المالك"
+                 data-ar-label="رقم هوية المالك" data-en-label="Owner identity number"
+                 inputmode="numeric"
+                 maxlength="20" required>
+        </div>
+        <span class="field__hint"
+              data-ar="رقم الهوية الوطنية أو الإقامة — للتحقّق فقط، لا يُعرَض"
+              data-en="National ID or residency number — for verification only, not shown publicly">
+          رقم الهوية الوطنية أو الإقامة — للتحقّق فقط، لا يُعرَض
+        </span>
+      </div>
+
+      
+      <div class="field">
+        <label class="field__label" for="mo-doc-proof"
+               data-ar="صورة وثيقة رسمية" data-en="Official document image">صورة وثيقة رسمية</label>
+        <div class="field__box" style="align-items:center; gap:var(--space-sm); flex-wrap:wrap; min-height:44px;">
+          <input class="field__control" id="mo-doc-proof" type="file"
+                 accept="image/*,application/pdf"
+                 aria-label="رفع صورة السجل التجاري أو الهوية"
+                 data-ar-label="رفع صورة السجل التجاري أو الهوية" data-en-label="Upload commercial license or ID image"
+                 style="flex:1; min-width:0; cursor:pointer;">
+        </div>
+        <span class="field__hint"
+              data-ar="صورة السجل التجاري أو الهوية — JPG أو PDF — بحد أقصى ٥ ميغابايت"
+              data-en="Commercial license or ID image — JPG or PDF — max 5 MB">
+          صورة السجل التجاري أو الهوية — JPG أو PDF — بحد أقصى ٥ ميغابايت
+        </span>
+      </div>
+
+      
+      <div class="mo-callout" role="note" aria-live="polite">
+        <div class="mo-callout__icon" aria-hidden="true">
+          
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v18M5 7l7-4 7 4M5 17l7 4 7-4"/>
+            <line x1="3" y1="12" x2="9" y2="12"/>
+            <line x1="15" y1="12" x2="21" y2="12"/>
+          </svg>
+        </div>
+        <div class="mo-callout__body">
+          <p class="mo-callout__title"
+             data-ar="إدراج مجّاني — لا أفضليّة بالدفع"
+             data-en="Free listing — no paid priority">
+            إدراج مجّاني — لا أفضليّة بالدفع
+          </p>
+          <p class="mo-callout__text"
+             data-ar="سعرك يظهر كأيّ مصدر آخر في نِبراس — بدون ترتيب مدفوع. الترتيب يعتمد على الدقّة وتحديث السعر فقط."
+             data-en="Your price appears like any other source in Nibras — no paid ranking. Ordering depends only on accuracy and price freshness.">
+            سعرك يظهر كأيّ مصدر آخر في نِبراس — بدون ترتيب مدفوع. الترتيب يعتمد على الدقّة وتحديث السعر فقط.
+          </p>
+        </div>
+      </div>
+
+      
+      <div style="padding-block-start:var(--space-sm); padding-block-end:var(--space-md);">
+        <button type="submit"
+                class="btn btn--primary btn--block btn--lg mo-press"
+                aria-label="أنشئ المتجر وابدأ الإدراج"
+                data-ar-label="أنشئ المتجر وابدأ الإدراج" data-en-label="Create store and start listing"
+                data-ar="أنشئ المتجر" data-en="Create store">
+          
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 2.5 C10 7.5,15.5 9.5,15.25 14 C15.1 17.5,12.25 19.75,9.75 18.5 C12 18.1,13.5 16.5,13 13.75 C12.1 9.5,9.25 7,13.5 2.5 Z"/><path d="M10.5 21.5 C14 16.5,8.5 14.5,8.75 10 C8.9 6.5,11.75 4.25,14.25 5.5 C12 5.9,10.5 7.5,11 10.25 C11.9 14.5,14.75 17,10.5 21.5 Z" opacity=".5"/></svg>
+          أنشئ المتجر
+          
+          <span class="btn__spinner" aria-hidden="true" style="display:none;"></span>
+        </button>
+        <p class="t-caption" style="text-align:center; margin-block-start:var(--space-sm);"
+           data-ar="بإنشاء المتجر توافق على شروط الاستخدام"
+           data-en="By creating a store you agree to the terms of use">
+          بإنشاء المتجر توافق على
+          <a href="#" style="color:var(--accent-brand); text-decoration:underline;"
+             data-ar="شروط الاستخدام" data-en="terms of use">شروط الاستخدام</a>
+        </p>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+</body>
+</html>

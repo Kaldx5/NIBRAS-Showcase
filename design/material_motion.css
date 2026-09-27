@@ -1,0 +1,131 @@
+--curve-*) — صفر hex. ميزانية 60fps (transform/opacity فقط).
+   ════════════════════════════════════════════════════════════════════ */
+
+
+@keyframes mo-fade      { from{ opacity:0 } to{ opacity:1 } }
+@keyframes mo-slide-up  { from{ opacity:0; transform:translateY(16px) } to{ opacity:1; transform:none } }
+@keyframes mo-slide-down{ from{ opacity:0; transform:translateY(-12px) } to{ opacity:1; transform:none } }
+@keyframes mo-scale-in  { from{ opacity:0; transform:scale(.94) } to{ opacity:1; transform:scale(1) } }
+@keyframes mo-sheet-in  { from{ transform:translateY(100%) } to{ transform:translateY(0) } }
+@keyframes mo-toast-in  { from{ opacity:0; transform:translateY(20px) } to{ opacity:1; transform:none } }
+@keyframes mo-axis-in   { from{ opacity:0; transform:translateX(24px) } to{ opacity:1; transform:none } }   
+@keyframes mo-pulse-ring{ 0%{ box-shadow:0 0 0 0 var(--accent-glow) } 70%{ box-shadow:0 0 0 10px transparent } 100%{ box-shadow:0 0 0 0 transparent } }
+@keyframes mo-pulse-trust{ 0%{ box-shadow:0 0 0 0 var(--status-trust) } 70%{ box-shadow:0 0 0 8px transparent } 100%{ box-shadow:0 0 0 0 transparent } }
+@keyframes mo-bob       { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-3px) } }
+@keyframes mo-spin      { to{ transform:rotate(360deg) } }
+@keyframes mo-bar-grow  { from{ transform:scaleY(.001) } to{ transform:scaleY(1) } }
+
+
+.mo-fade     { animation:mo-fade      var(--dur-normal) var(--curve-decel) both; }
+.mo-slide-up { animation:mo-slide-up  var(--dur-normal) var(--curve-emphasized) both; }
+.mo-slide-down{animation:mo-slide-down var(--dur-normal) var(--curve-emphasized) both; }
+.mo-scale-in { animation:mo-scale-in  var(--dur-normal) var(--curve-spring) both; }
+.mo-page     { animation:mo-axis-in   var(--dur-page)   var(--curve-emphasized) both; }
+.mo-sheet    { animation:mo-sheet-in  var(--dur-normal) var(--curve-emphasized) both; }
+.mo-toast    { animation:mo-toast-in  var(--dur-normal) var(--curve-spring) both; }
+
+
+.mo-stagger > *{ animation:mo-slide-up var(--dur-normal) var(--curve-emphasized) both; }
+.mo-stagger > *:nth-child(1){ animation-delay:calc(var(--stagger-step)*0) }
+.mo-stagger > *:nth-child(2){ animation-delay:calc(var(--stagger-step)*1) }
+.mo-stagger > *:nth-child(3){ animation-delay:calc(var(--stagger-step)*2) }
+.mo-stagger > *:nth-child(4){ animation-delay:calc(var(--stagger-step)*3) }
+.mo-stagger > *:nth-child(5){ animation-delay:calc(var(--stagger-step)*4) }
+.mo-stagger > *:nth-child(6){ animation-delay:calc(var(--stagger-step)*5) }
+.mo-stagger > *:nth-child(7){ animation-delay:calc(var(--stagger-step)*6) }
+.mo-stagger > *:nth-child(8){ animation-delay:calc(var(--stagger-step)*7) }
+.mo-stagger > *:nth-child(n+9){ animation-delay:calc(var(--stagger-step)*8) }
+
+
+.mo-pulse        { animation:mo-pulse-ring 2.4s ease-out infinite; }          
+.mo-pulse-trust  { animation:mo-pulse-trust 1.8s ease-out 2; border-radius:var(--radius-pill); }  
+.mo-bob          { animation:mo-bob 3s ease-in-out infinite; }                 
+.mo-spin         { animation:mo-spin .7s linear infinite; }
+.mo-bar          { transform-origin:bottom; animation:mo-bar-grow var(--dur-slow) var(--curve-decel) both; }  
+
+
+.mo-press{ transition:transform var(--dur-xfast) var(--curve-standard); }
+.mo-press:active{ transform:scale(.96); }
+.mo-press-sm:active{ transform:scale(.98); }
+
+
+.mo-fab{ transition:transform var(--dur-fast) var(--curve-spring), box-shadow var(--dur-fast) var(--curve-standard); }
+.mo-fab:active{ transform:scale(.94); }
+
+
+.tier-balanced .mo-slide-up,
+.tier-balanced .mo-slide-down,
+.tier-balanced .mo-scale-in,
+.tier-balanced .mo-page,
+.tier-balanced .mo-toast,
+.tier-balanced .mo-stagger > *{ animation-duration:var(--dur-fast); }
+.tier-balanced .mo-stagger > *{ animation-delay:0ms !important; }            
+
+
+.tier-solid .mo-slide-up,
+.tier-solid .mo-slide-down,
+.tier-solid .mo-scale-in,
+.tier-solid .mo-sheet,
+.tier-solid .mo-page,
+.tier-solid .mo-toast,
+.tier-solid .mo-stagger > *{ animation:mo-fade var(--dur-fast) both !important; }
+.tier-solid .mo-pulse,
+.tier-solid .mo-pulse-trust,
+.tier-solid .mo-bob{ animation:none !important; }
+.tier-solid .mo-bar{ animation:none !important; transform:none !important; }
+
+
+.tier-a11y .mo-fade,.tier-a11y .mo-slide-up,.tier-a11y .mo-slide-down,.tier-a11y .mo-scale-in,
+.tier-a11y .mo-page,.tier-a11y .mo-sheet,.tier-a11y .mo-toast,.tier-a11y .mo-stagger > *,
+.tier-a11y .mo-pulse,.tier-a11y .mo-pulse-trust,.tier-a11y .mo-bob,.tier-a11y .mo-bar{
+  animation:none !important; opacity:1 !important; transform:none !important;
+}
+.tier-a11y .mo-press:active,.tier-a11y .mo-press-sm:active,.tier-a11y .mo-fab:active{ transform:none; }
+
+
+
+@keyframes av-flicker{ 0%,100%{ transform:scaleY(1) translateY(0); opacity:.92 } 45%{ transform:scaleY(1.07) translateY(-.6px); opacity:1 } 72%{ transform:scaleY(.97) translateY(.4px); opacity:.95 } }
+@keyframes av-spark{ 0%,100%{ opacity:.45; transform:scale(.88) } 50%{ opacity:1; transform:scale(1.18) } }
+@keyframes av-breathe{ 0%,100%{ transform:scale(1) } 50%{ transform:scale(1.04) } }
+@keyframes av-orbit{ to{ transform:rotate(360deg) } }
+@keyframes av-glow{ 0%,100%{ box-shadow:0 0 0 0 transparent } 50%{ box-shadow:0 0 14px 2px var(--accent-glow) } }
+@keyframes av-rise{ 0%{ transform:translateY(3px) scaleY(.88); opacity:.65 } 100%{ transform:none; opacity:1 } }
+@keyframes av-listen{ 0%{ box-shadow:0 0 0 0 var(--accent-glow) } 70%{ box-shadow:0 0 0 12px transparent } 100%{ box-shadow:0 0 0 0 transparent } }
+@keyframes av-type{ 0%,80%,100%{ transform:translateY(0); opacity:.45 } 40%{ transform:translateY(-4px); opacity:1 } }
+
+
+.nibras-avatar .av-flame{ transform-box:fill-box; transform-origin:center bottom; animation:av-flicker 1.8s ease-in-out infinite; }
+.nibras-avatar .av-spark{ transform-box:fill-box; transform-origin:center; animation:av-spark 1.8s ease-in-out infinite; }
+.nibras-avatar .av-orbit{ transform-box:fill-box; transform-origin:center; }
+
+
+.nibras-avatar.is-idle{ animation:av-breathe 4.5s ease-in-out infinite; }
+.nibras-avatar.is-greeting .av-flame{ animation:av-rise .6s var(--curve-spring) both, av-flicker 1.8s ease-in-out .6s infinite; }
+.nibras-avatar.is-listening{ border-radius:var(--radius-pill); animation:av-listen 1.6s ease-out infinite; }
+.nibras-avatar.is-thinking .av-orbit{ animation:av-orbit 3.2s linear infinite; }
+.nibras-avatar.is-answering{ border-radius:var(--radius-pill); animation:av-glow 1.6s ease-in-out infinite; }
+.nibras-avatar.is-success .av-orbit{ animation:av-orbit 1s var(--curve-emphasized) 1; }
+.nibras-avatar.is-warning{ color:var(--status-warn); }                 
+.nibras-avatar.is-offline{ color:var(--ink-tertiary); opacity:.6; }
+.nibras-avatar.is-offline .av-flame,.nibras-avatar.is-offline .av-spark{ animation:none; }
+
+.av-typing{ display:inline-flex; gap:5px; align-items:center; }
+.av-typing > i{ width:7px; height:7px; border-radius:var(--radius-pill); background:currentColor; animation:av-type 1.2s ease-in-out infinite; }
+.av-typing > i:nth-child(2){ animation-delay:.16s } .av-typing > i:nth-child(3){ animation-delay:.32s }
+
+
+.tier-solid .nibras-avatar,.tier-solid .nibras-avatar *{ animation:none !important; }
+.tier-solid .av-typing > i{ animation:none !important; opacity:.7 !important; }
+.tier-a11y .nibras-avatar,.tier-a11y .nibras-avatar *{ animation:none !important; }
+.tier-a11y .av-typing > i{ animation:none !important; opacity:.7 !important; }
+
+
+@media (prefers-reduced-motion:reduce){
+  .mo-fade,.mo-slide-up,.mo-slide-down,.mo-scale-in,.mo-page,.mo-sheet,.mo-toast,
+  .mo-stagger > *,.mo-pulse,.mo-pulse-trust,.mo-bob,.mo-spin,.mo-bar,
+  .nibras-avatar,.nibras-avatar *,.av-typing > i{
+    animation:none !important; opacity:1 !important; transform:none !important;
+  }
+  .mo-press:active,.mo-press-sm:active,.mo-fab:active{ transform:none !important; }
+  .nibras-avatar.is-offline{ opacity:.6 !important; }
+}

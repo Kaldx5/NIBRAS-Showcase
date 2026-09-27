@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl" data-theme="dark" class="tier-rich">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>وضع غير متّصل — نِبراس</title>
+<script>(function(){try{var p=new URLSearchParams(location.search),d=document.documentElement;var t=p.get('tier'),th=p.get('theme'),l=p.get('lang');if(t){d.className='tier-'+t;}if(th){d.setAttribute('data-theme',th);}if(l){d.setAttribute('lang',l);d.setAttribute('dir',l==='en'?'ltr':'rtl');}}catch(e){}})();</script>
+
+<link rel="stylesheet" href="../lib/fonts.css">
+<link rel="stylesheet" href="../material_tokens.css">
+<link rel="stylesheet" href="../material_components.css">
+<link rel="stylesheet" href="../material_screens.css">
+<link rel="stylesheet" href="../material_motion.css">
+<script src="../lib/switcher.js" defer></script>
+<style>
+  /* تخطيط ثانوي فقط — var() حصراً، لا hex */
+  .offline-head{ margin:var(--space-lg) var(--space-md) var(--space-md); display:flex; flex-direction:column; gap:var(--space-xs); }
+  .offline-head__title{ font-family:var(--font-ar-brand); font-size:24px; font-weight:700; color:var(--ink-primary); line-height:1.2; margin:0; }
+  .offline-head__sub{ font-family:var(--font-ar-body); font-size:var(--type-body-large-size); color:var(--ink-secondary); margin:0; }
+  h2.sec-head__title{ margin:0; }
+  /* إخفاء بصريّ */
+  .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  /* حلقة تركيز */
+  .btn:focus-visible,.product-card:focus-visible{outline:2px solid var(--accent-brand);outline-offset:2px;}
+  .offline-retry{ padding:var(--space-md) var(--space-md) var(--space-lg); }
+  /* رأس صغير لكل قسم */
+  .sec-head{ margin:var(--space-md) var(--space-md) var(--space-xs); display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-sm); }
+  .sec-head__title{ font-family:var(--font-ar-brand); font-size:var(--type-title-large-size); font-weight:700; color:var(--ink-primary); }
+  .sec-head__count{ font-family:var(--font-ar-body); font-size:var(--type-label-size); font-weight:600; color:var(--ink-tertiary); }
+  /* داخليّات صفّ المزامنة (canon صلب — لا glass/neu) */
+  .sync-row__thumb{ flex:0 0 auto; width:40px; height:40px; border-radius:var(--radius-sm); background:var(--accent-brand-tint); color:var(--accent-brand); display:flex; align-items:center; justify-content:center; font-family:var(--font-ar-display); font-weight:900; font-size:18px; }
+  .sync-row__body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px; }
+  .sync-row__name{ font-family:var(--font-ar-body); font-size:var(--type-body-large-size); font-weight:600; color:var(--ink-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .sync-row__line{ display:flex; align-items:center; gap:var(--space-sm); }
+  .sync-row__time{ font-family:var(--font-ar-body); font-size:var(--type-caption-size); color:var(--ink-tertiary); white-space:nowrap; }
+  .sync-row__status svg{ width:13px; height:13px; }
+  .sync-bar{ padding:var(--space-md) var(--space-md) 0; display:flex; flex-direction:column; gap:var(--space-xs); }
+  .sync-bar__meta{ display:flex; align-items:baseline; justify-content:space-between; font-family:var(--font-ar-body); font-size:var(--type-label-size); color:var(--ink-secondary); }
+  .sync-now{ padding:var(--space-sm) var(--space-md) var(--space-md); }
+  /* زرّ المزامنة معطّل بصرياً حين offline */
+  .btn.is-disabled,.btn[disabled]{ opacity:0.38; pointer-events:none; cursor:not-allowed; }
+  /* تثبيت حجم الأيقونة داخل الأزرار — يمنع تمدّد SVG وقصّ النصّ */
+  .btn svg{ width:20px; height:20px; flex-shrink:0; }
+  /* ضمان عدم انكماش طابع الوقت وعدم التفاف نصّه */
+  .sync-row__time{ flex-shrink:0; white-space:nowrap; }
+  /* ضمان انكماش العمود الأوسط فقط ومنع تجاوز العرض */
+  .sync-row__body{ overflow:hidden; }
+  /* منع التفاف نصّ الطابع الزمني في بطاقة المنتج */
+  .product-card__caption{ white-space:nowrap; text-align:end; }
+</style>
+</head>
+<body><aside style="padding:12px;background:#241c0f;color:#ffe5a7;text-align:center;font:14px system-ui">Selected design demonstration · Example data · Not a live service</aside>
+<div class="app-frame app-frame--tall mo-page">
+
+  
+  <div class="status-bar">
+    <span class="status-bar__time bidi-num">٩:٤١</span>
+    <span class="status-bar__icons" aria-hidden="true">
+      
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/></svg>
+      
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="18" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/></svg>
+    </span>
+  </div>
+
+  
+  <div class="screen-pad">
+    <div class="offline-banner" role="status">
+      <svg class="offline-banner__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><line x1="2" y1="2" x2="22" y2="22"/>
+      </svg>
+      <span class="offline-banner__text" data-ar="أنت غير متّصل — تُعرض آخر الأسعار المحفوظة" data-en="You are offline — showing last saved prices">أنت غير متّصل — تُعرض آخر الأسعار المحفوظة</span>
+    </div>
+  </div>
+
+  
+  <div class="sec-head">
+    <h2 class="sec-head__title" data-ar="قائمة المزامنة" data-en="Sync queue">قائمة المزامنة</h2>
+    <span class="sec-head__count bidi-num" data-ar="٣ بانتظار الرفع" data-en="3 waiting to upload">٣ بانتظار الرفع</span>
+  </div>
+
+  <div class="sync-list mo-stagger" role="list">
+
+    
+    <div class="sync-row" role="listitem">
+      <div class="sync-row__thumb" aria-hidden="true">ز</div>
+      <div class="sync-row__body">
+        <span class="sync-row__name" data-ar="زيت دوّار الشمس ١٦ ل — سوق الخير" data-en="Sunflower oil 16L — Souq al-Khair">زيت دوّار الشمس ١٦ ل — سوق الخير</span>
+        <span class="sync-row__line">
+          <span class="price price--sm" data-demo="1"><span class="price__value bidi-num">٤٧٥</span><span class="price__unit">ل.س</span></span>
+          <span class="sync-row__status">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span data-ar="بانتظار المزامنة" data-en="Waiting to sync">بانتظار المزامنة</span>
+          </span>
+        </span>
+      </div>
+      <span class="sync-row__time" data-ar="قبل ٥ د" data-en="5m ago">قبل ٥ د</span>
+    </div>
+
+    
+    <div class="sync-row" role="listitem">
+      <div class="sync-row__thumb" aria-hidden="true">خ</div>
+      <div class="sync-row__body">
+        <span class="sync-row__name" data-ar="ربطة خبز (٨ أرغفة) — البيت الشامي" data-en="Bread bundle (8) — Al-Bayt al-Shami">ربطة خبز (٨ أرغفة) — البيت الشامي</span>
+        <span class="sync-row__line">
+          <span class="price price--sm" data-demo="1"><span class="price__value bidi-num">١٢</span><span class="price__unit">ل.س</span></span>
+          <span class="sync-row__status">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span data-ar="بانتظار المزامنة" data-en="Waiting to sync">بانتظار المزامنة</span>
+          </span>
+        </span>
+      </div>
+      <span class="sync-row__time" data-ar="قبل ١٨ د" data-en="18m ago">قبل ١٨ د</span>
+    </div>
+
+    
+    <div class="sync-row" role="listitem">
+      <div class="sync-row__thumb" aria-hidden="true">غ</div>
+      <div class="sync-row__body">
+        <span class="sync-row__name" data-ar="أسطوانة غاز منزلي — سوق باب توما" data-en="Home gas cylinder — Souq Bab Touma">أسطوانة غاز منزلي — سوق باب توما</span>
+        <span class="sync-row__line">
+          <span class="price price--sm" data-demo="1"><span class="price__value bidi-num">١٬١٢٠</span><span class="price__unit">ل.س</span></span>
+          <span class="sync-row__status">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span data-ar="بانتظار المزامنة" data-en="Waiting to sync">بانتظار المزامنة</span>
+          </span>
+        </span>
+      </div>
+      <span class="sync-row__time" data-ar="قبل ٤٠ د" data-en="40m ago">قبل ٤٠ د</span>
+    </div>
+
+  </div>
+
+  
+  <div class="sync-bar">
+    <div class="sync-bar__meta">
+      <span data-ar="جاهزيّة المزامنة" data-en="Sync readiness">جاهزيّة المزامنة</span>
+      <span data-ar="٤٠٪" data-en="40%">٤٠٪</span>
+    </div>
+    <div class="sync-progress" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" aria-label="تقدّم المزامنة ٤٠ بالمئة" data-ar-label="تقدّم المزامنة ٤٠ بالمئة" data-en-label="Sync progress 40 percent">
+      <div class="sync-progress__fill" style="width:40%"></div>
+    </div>
+  </div>
+
+  
+  <div class="sync-now">
+    <button type="button" class="btn btn--primary btn--block btn--lg mo-press is-disabled" disabled aria-disabled="true" data-ar="المزامنة الآن" data-en="Sync now">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>
+      <span>المزامنة الآن</span>
+    </button>
+  </div>
+
+  
+  <div class="offline-head">
+    <h1 class="offline-head__title" data-ar="الأسعار المحفوظة" data-en="Saved prices">الأسعار المحفوظة</h1>
+    <p class="offline-head__sub" data-ar="درعا — حوران · من الذاكرة المؤقّتة" data-en="Daraa — Hauran · from cache">درعا — حوران · من الذاكرة المؤقّتة</p>
+  </div>
+
+  
+  <div class="screen-pad">
+    <div class="list-stack mo-stagger">
+
+      
+      <article class="product-card" tabindex="0" aria-label="سكّر — حي الميدان" data-ar-label="سكّر — حي الميدان" data-en-label="Sugar — Al-Maydan">
+        <div class="product-card__thumb" aria-hidden="true"><span class="product-card__thumb-letter">س</span></div>
+        <div class="product-card__body">
+          <span class="product-card__name">سكّر</span>
+          <span class="product-card__meta">
+            <span class="region-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span data-ar="حي الميدان" data-en="Al-Maydan">حي الميدان</span>
+            </span>
+          </span>
+        </div>
+        <div class="product-card__trailing">
+          <span class="price price--md" data-demo="1"><span class="price__value bidi-num">٦٣</span><span class="price__unit">ل.س</span><span class="price__per">/كغ</span></span>
+          <span class="product-card__caption" data-ar="آخر تحديث قبل ٣ ساعات" data-en="Updated 3 hours ago">آخر تحديث قبل ٣ ساعات</span>
+        </div>
+      </article>
+
+      
+      <article class="product-card" tabindex="0" aria-label="زيت دوّار الشمس — طريق السد" data-ar-label="زيت دوّار الشمس — طريق السد" data-en-label="Sunflower oil — Tariq al-Sadd">
+        <div class="product-card__thumb" aria-hidden="true"><span class="product-card__thumb-letter">ز</span></div>
+        <div class="product-card__body">
+          <span class="product-card__name">زيت دوّار الشمس ١٦ ل</span>
+          <span class="product-card__meta">
+            <span class="region-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span data-ar="طريق السد" data-en="Tariq al-Sadd">طريق السد</span>
+            </span>
+          </span>
+        </div>
+        <div class="product-card__trailing">
+          <span class="price price--md" data-demo="1"><span class="price__value bidi-num">٤٨٠</span><span class="price__unit">ل.س</span></span>
+          <span class="product-card__caption" data-ar="آخر تحديث قبل ٣ ساعات" data-en="Updated 3 hours ago">آخر تحديث قبل ٣ ساعات</span>
+        </div>
+      </article>
+
+      
+      <article class="product-card" tabindex="0" aria-label="رزّ مصري — درعا البلد" data-ar-label="رزّ مصري — درعا البلد" data-en-label="Egyptian rice — Daraa al-Balad">
+        <div class="product-card__thumb" aria-hidden="true"><span class="product-card__thumb-letter">ر</span></div>
+        <div class="product-card__body">
+          <span class="product-card__name">رزّ مصري</span>
+          <span class="product-card__meta">
+            <span class="region-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span data-ar="درعا البلد" data-en="Daraa al-Balad">درعا البلد</span>
+            </span>
+          </span>
+        </div>
+        <div class="product-card__trailing">
+          <span class="price price--md" data-demo="1"><span class="price__value bidi-num">٩٨</span><span class="price__unit">ل.س</span><span class="price__per">/كغ</span></span>
+          <span class="product-card__caption" data-ar="آخر تحديث قبل ٣ ساعات" data-en="Updated 3 hours ago">آخر تحديث قبل ٣ ساعات</span>
+        </div>
+      </article>
+
+      
+      <article class="product-card" tabindex="0" aria-label="ربطة خبز — حي الميدان" data-ar-label="ربطة خبز — حي الميدان" data-en-label="Bread bundle — Al-Maydan">
+        <div class="product-card__thumb" aria-hidden="true"><span class="product-card__thumb-letter">خ</span></div>
+        <div class="product-card__body">
+          <span class="product-card__name">ربطة خبز (٨ أرغفة)</span>
+          <span class="product-card__meta">
+            <span class="region-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span data-ar="حي الميدان" data-en="Al-Maydan">حي الميدان</span>
+            </span>
+          </span>
+        </div>
+        <div class="product-card__trailing">
+          <span class="price price--md" data-demo="1"><span class="price__value bidi-num">١٢</span><span class="price__unit">ل.س</span></span>
+          <span class="product-card__caption" data-ar="آخر تحديث قبل ٣ ساعات" data-en="Updated 3 hours ago">آخر تحديث قبل ٣ ساعات</span>
+        </div>
+      </article>
+
+      
+      <article class="product-card" tabindex="0" aria-label="عدس أحمر مجروش — طريق السد" data-ar-label="عدس أحمر مجروش — طريق السد" data-en-label="Red lentils — Tariq al-Sadd">
+        <div class="product-card__thumb" aria-hidden="true"><span class="product-card__thumb-letter">ع</span></div>
+        <div class="product-card__body">
+          <span class="product-card__name">عدس أحمر مجروش</span>
+          <span class="product-card__meta">
+            <span class="region-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span data-ar="درعا البلد" data-en="Daraa al-Balad">درعا البلد</span>
+            </span>
+          </span>
+        </div>
+        <div class="product-card__trailing">
+          <span class="price price--md" data-demo="1"><span class="price__value bidi-num">٧٤</span><span class="price__unit">ل.س</span><span class="price__per">/كغ</span></span>
+          <span class="product-card__caption" data-ar="آخر تحديث قبل ٣ ساعات" data-en="Updated 3 hours ago">آخر تحديث قبل ٣ ساعات</span>
+        </div>
+      </article>
+
+      
+      <article class="product-card" tabindex="0" aria-label="أسطوانة غاز منزلي — طريق السد" data-ar-label="أسطوانة غاز منزلي — طريق السد" data-en-label="Home gas cylinder — Tariq al-Sadd">
+        <div class="product-card__thumb" aria-hidden="true"><span class="product-card__thumb-letter">غ</span></div>
+        <div class="product-card__body">
+          <span class="product-card__name">أسطوانة غاز منزلي</span>
+          <span class="product-card__meta">
+            <span class="region-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span data-ar="طريق السد" data-en="Tariq al-Sadd">طريق السد</span>
+            </span>
+          </span>
+        </div>
+        <div class="product-card__trailing">
+          <span class="price price--md" data-demo="1"><span class="price__value bidi-num">٢٤٥</span><span class="price__unit">ل.س</span></span>
+          <span class="product-card__caption" data-ar="آخر تحديث قبل ٣ ساعات" data-en="Updated 3 hours ago">آخر تحديث قبل ٣ ساعات</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  
+  <div class="offline-retry">
+    <button type="button" class="btn btn--secondary btn--block btn--lg mo-press" data-ar="حاول التحديث" data-en="Try refresh">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>
+      <span>حاول التحديث</span>
+    </button>
+  </div>
+
+</div>
+</body>
+</html>

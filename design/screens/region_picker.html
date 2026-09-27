@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl" data-theme="dark" class="tier-rich">
+<head>
+<meta charset="UTF-8"><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>هوية منطقتك — نِبراس</title>
+<script>(function(){try{var p=new URLSearchParams(location.search),d=document.documentElement;var t=p.get('tier'),th=p.get('theme'),l=p.get('lang');if(t){d.className='tier-'+t;}if(th){d.setAttribute('data-theme',th);}if(l){d.setAttribute('lang',l);d.setAttribute('dir',l==='en'?'ltr':'rtl');}}catch(e){}})();</script>
+<link rel="stylesheet" href="../lib/fonts.css">
+<link rel="stylesheet" href="../material_tokens.css"><link rel="stylesheet" href="../material_components.css"><link rel="stylesheet" href="../material_screens.css"><link rel="stylesheet" href="../material_motion.css">
+<script src="../lib/switcher.js" defer></script>
+<style>
+ .region-page{ padding-block:var(--space-md) var(--space-2xl); }
+ .region-intro{ margin:var(--space-sm) var(--space-xs) var(--space-md); }
+ .region-intro__hint{ font-family:var(--font-ar-body); font-size:var(--type-body-large-size); color:var(--ink-secondary); }
+ .scope-note{ display:flex; gap:var(--space-sm); align-items:flex-start; padding:var(--space-sm) var(--space-md); margin-bottom:var(--space-md);
+   background:var(--accent-brand-tint); border-radius:var(--radius-sm); font-family:var(--font-ar-body); font-size:var(--type-caption-size); color:var(--ink-secondary); }
+ .gov-grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--space-md); }
+ .gov-card{ position:relative; display:flex; flex-direction:column; padding:0; overflow:hidden; text-align:start; width:100%;
+   border:1px solid var(--line-hairline); border-radius:var(--radius-card); background:var(--bg-card); cursor:pointer;
+   transition:transform var(--dur-fast) var(--curve-standard), border-color var(--dur-fast); }
+ .gov-card:hover{ transform:translateY(-2px); } .gov-card[aria-disabled="true"]{ opacity:.5; cursor:not-allowed; }
+ .gov-card[aria-selected="true"]{ border-color:var(--accent-brand); box-shadow:var(--elev-2), 0 0 0 1px var(--accent-brand); }
+ .gov-card__photo{ position:relative; height:110px; background:var(--gc) center/cover no-repeat, var(--bg-surface); }
+ [data-theme="light"] .gov-card__photo{ background-image:var(--gc-l); }
+ .gov-card__photo::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, transparent 45%, var(--bg-card) 100%); }
+ .gov-card__noimg{ position:relative; height:110px; display:flex; align-items:center; justify-content:center; background:var(--bg-surface); color:var(--accent-brand); overflow:hidden; }
+ .gov-card__noimg svg{ width:30px; height:30px; opacity:.5; }
+ .gov-card__body{ position:relative; z-index:1; padding:var(--space-sm) var(--space-md) var(--space-md); display:flex; align-items:center; justify-content:space-between; gap:var(--space-sm); min-width:0; }
+ .gov-card__name{ font-family:var(--font-ar-brand); font-size:var(--type-title-medium-size); font-weight:700; color:var(--ink-primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }
+ .gov-card__state{ font-family:var(--font-ar-body); font-size:var(--type-label-size); padding:var(--space-xs) var(--space-sm); border-radius:var(--radius-pill); white-space:nowrap; flex-shrink:0; min-height:28px; display:inline-flex; align-items:center; }
+ .gov-card__state--active{ background:var(--accent-brand); color:var(--bg-canvas); }
+ .gov-card__state--soon{ background:var(--bg-input); color:var(--ink-primary); }
+ .gov-check{ position:absolute; inset-block-start:var(--space-sm); inset-inline-end:var(--space-sm); z-index:2; width:28px; height:28px; border-radius:var(--radius-pill); background:var(--accent-brand); color:var(--bg-canvas); display:none; align-items:center; justify-content:center; }
+ .gov-card[aria-selected="true"] .gov-check{ display:inline-flex; } .gov-check svg{ width:16px; height:16px; }
+ /* مستوى٢: مناطق درعا */
+ .daraa-view{ display:none; } .daraa-view.is-open{ display:block; }
+ .sub-back{ display:inline-flex; align-items:center; gap:var(--space-xs); background:none; border:0; color:var(--accent-brand); font-family:var(--font-ar-body); font-size:var(--type-body-size); font-weight:600; cursor:pointer; padding:var(--space-sm) 0; min-height:44px; }
+ .sub-back svg{ width:18px; height:18px; }
+ .sub-list{ display:flex; flex-direction:column; gap:0; }
+ .sub-row{ display:flex; align-items:center; gap:var(--space-md); padding:var(--space-md); border-bottom:1px solid var(--line-hairline); cursor:pointer; min-height:60px; background:none; border-inline:0; border-top:0; width:100%; text-align:start; }
+ .sub-row[aria-selected="true"]{ background:var(--accent-brand-tint); }
+ .sub-row__body{ flex:1; } .sub-row__name{ font-family:var(--font-ar-brand); font-weight:600; color:var(--ink-primary); }
+ .sub-row__meta{ font-family:var(--font-ar-body); font-size:var(--type-caption-size); color:var(--ink-tertiary); }
+ .sub-row__chev{ color:var(--ink-tertiary); } .sub-row__chev svg{ width:18px; height:18px; }
+</style>
+</head>
+<body><aside style="padding:12px;background:#241c0f;color:#ffe5a7;text-align:center;font:14px system-ui">Selected design demonstration · Example data · Not a live service</aside>
+<div id="ms-switcher" style="display:none" aria-hidden="true"></div>
+<div class="app-frame app-frame--tall">
+  <div class="status-bar"><span class="bidi-num">٩:٤١</span><span class="status-bar__icons"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h20V2z"/></svg></span></div>
+  <header class="app-topbar"><h1 class="app-topbar__title" data-ar="هوية منطقتك" data-en="Your region">هوية منطقتك</h1></header>
+  <main class="screen-pad region-page mo-page">
+    
+    <section id="gov-view">
+      <div class="region-intro"><p class="region-intro__hint" data-ar="اختر محافظتك" data-en="Choose your governorate">اختر محافظتك</p></div>
+      <div class="scope-note"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 20 5v6c0 5-3.6 8.5-8 10-4.4-1.5-8-5-8-10V5z"/></svg>
+        <span data-ar="الإطلاق الحاليّ في درعا فقط؛ بقيّة المحافظات قريباً." data-en="Current launch: Daraa only; other governorates coming soon.">الإطلاق الحاليّ في درعا فقط؛ بقيّة المحافظات قريباً.</span></div>
+      <div class="gov-grid" id="govs" role="radiogroup" aria-label="اختيار المحافظة" data-ar-label="اختيار المحافظة" data-en-label="Choose a governorate"></div>
+    </section>
+    
+    <section id="daraa-view" class="daraa-view" aria-label="مناطق درعا" data-ar-label="مناطق درعا" data-en-label="Daraa regions">
+      <button class="sub-back icon-flip" id="back" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg><span data-ar="المحافظات" data-en="Governorates">المحافظات</span></button>
+      <div class="region-intro"><p class="region-intro__hint" data-ar="مناطق درعا" data-en="Daraa regions">مناطق درعا</p></div>
+      <div class="sub-list" id="daraa-regions"></div>
+    </section>
+  </main>
+  <div class="app-frame__bottom"><button class="btn btn--primary btn--block" id="confirm" data-ar="تأكيد" data-en="Confirm">تأكيد</button></div>
+</div>
+<script>
+ // المستوى ١: ١٤ محافظة سوريّة (درعا فعّالة، البقيّة قريباً) — scope gating لإطلاق درعا
+ var GOV=[
+  ["daraa","درعا","Daraa","active","daraa_bosra"],
+  ["damascus","دمشق","Damascus","soon","damascus_umayyad"],
+  ["rif_dimashq","ريف دمشق","Rif Dimashq","soon","rif_dimashq"],
+  ["suwayda","السويداء","As-Suwayda","soon","suwayda_qanawat"],
+  ["quneitra","القنيطرة","Quneitra","soon",null],
+  ["homs","حمص","Homs","soon","homs_khalid"],
+  ["hama","حماة","Hama","soon","hama_norias"],
+  ["tartus","طرطوس","Tartus","soon","tartus"],
+  ["latakia","اللاذقية","Latakia","soon","latakia_saladin"],
+  ["aleppo","حلب","Aleppo","soon","aleppo_citadel"],
+  ["idlib","إدلب","Idlib","soon","idlib"],
+  ["raqqa","الرقة","Raqqa","soon","raqqa"],
+  ["deirezzor","دير الزور","Deir ez-Zor","soon","deirezzor"],
+  ["hasakah","الحسكة","Al-Hasakah","soon",null]
+ ];
+ // المستوى ٢: مناطق درعا الـ١١ + عدّ بلدات (مدعومة/قريباً)
+ var DARAA=[
+  ["درعا المدينة","Daraa City","مدعومة · ٤ أحياء"],["درعا البلد","Daraa al-Balad","مدعومة"],["درعا المحطة","Daraa al-Mahatta","مدعومة"],
+  ["الريف الشرقي","East Countryside","مدعومة · أم ولد/الحراك/الكرك/بصر الحرير"],["الريف الغربي","West Countryside","مدعومة · نوى/جاسم/الشيخ مسكين"],
+  ["الريف الشمالي","North Countryside","مدعومة · إزرع/إبطع"],["الريف الجنوبي","South Countryside","قريباً"],
+  ["حوض اليرموك","Yarmouk Basin","قريباً"],["اللجاة","Al-Lajat","قريباً"],["سهل حوران الأوسط","Central Hauran Plain","مدعومة"],
+  ["منطقة الحرة الشرقية","East Al-Harra","قريباً"]
+ ];
+ var govHost=document.getElementById("govs");
+ GOV.forEach(function(g){
+   var b=document.createElement("button"); b.type="button"; b.className="gov-card"; b.setAttribute("role","radio");
+   var active=g[3]==="active";
+   b.setAttribute("aria-selected", active?"true":"false"); b.setAttribute("aria-checked", active?"true":"false");
+   if(!active) b.setAttribute("aria-disabled","true");
+   // placeholder للمحافظات التي تفتقر إلى صورة حقيقيّة — لهب canon فقط، لا معالم هندسيّة
+   var motifSvg='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:36px;height:36px;opacity:.55">'+
+     '<path d="M13.5 2.5 C10 7.5,15.5 9.5,15.25 14 C15.1 17.5,12.25 19.75,9.75 18.5 C12 18.1,13.5 16.5,13 13.75 C12.1 9.5,9.25 7,13.5 2.5 Z"/>'+
+     '<path d="M10.5 21.5 C14 16.5,8.5 14.5,8.75 10 C8.9 6.5,11.75 4.25,14.25 5.5 C12 5.9,10.5 7.5,11 10.25 C11.9 14.5,14.75 17,10.5 21.5 Z" opacity=".5"/>'+
+     '</svg>';
+   var photo = g[4]
+     ? '<span class="gov-card__photo" style="--gc:url(../assets/place_identity/'+g[4]+'/dark_card.webp);--gc-l:url(../assets/place_identity/'+g[4]+'/light_card.webp)"><span class="region-scrim"></span></span>'
+     : '<span class="gov-card__noimg">'+motifSvg+'<span class="region-scrim"></span></span>';
+   b.innerHTML='<span class="gov-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>'+photo+
+     '<span class="gov-card__body"><span class="gov-card__name" data-ar="'+g[1]+'" data-en="'+g[2]+'">'+g[1]+'</span>'+
+     '<span class="gov-card__state '+(active?'gov-card__state--active':'gov-card__state--soon')+'" data-ar="'+(active?'فعّالة':'قريباً')+'" data-en="'+(active?'Active':'Soon')+'">'+(active?'فعّالة':'قريباً')+'</span></span>';
+   if(active){ b.addEventListener("click",function(){ openDaraa(); }); }
+   govHost.appendChild(b);
+ });
+ var subHost=document.getElementById("daraa-regions");
+ DARAA.forEach(function(r){
+   var supported=r[2].indexOf("مدعومة")===0;
+   var b=document.createElement("button"); b.type="button"; b.className="sub-row"; b.setAttribute("role","radio"); b.setAttribute("aria-selected","false");
+   if(!supported) b.setAttribute("aria-disabled","true");
+   b.innerHTML='<span class="sub-row__body"><span class="sub-row__name" data-ar="'+r[0]+'" data-en="'+r[1]+'">'+r[0]+'</span><span class="sub-row__meta">'+r[2]+'</span></span>'+
+     '<span class="sub-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span>';
+   if(supported){ b.addEventListener("click",function(){ subHost.querySelectorAll(".sub-row").forEach(function(x){x.setAttribute("aria-selected","false");}); b.setAttribute("aria-selected","true"); }); }
+   subHost.appendChild(b);
+ });
+ function openDaraa(){ document.getElementById("gov-view").style.display="none"; document.getElementById("daraa-view").classList.add("is-open"); }
+ document.getElementById("back").addEventListener("click",function(){ document.getElementById("daraa-view").classList.remove("is-open"); document.getElementById("gov-view").style.display="block"; });
+</script>
+</body>
+</html>

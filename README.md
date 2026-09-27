@@ -33,3 +33,11 @@ This selection does not establish public deployment, active merchant partnership
 All rights reserved for the original NIBRAS materials. No permission to reuse the application or its assets is granted by this publication. Third-party rights remain with their owners. Map screenshots retain their visible OpenStreetMap and CARTO credits; see [attributions](ATTRIBUTIONS.md).
 
 [Khaled on GitHub](https://github.com/Kaldx5) · [LinkedIn](https://www.linkedin.com/in/khaled-alrefai-668079273/)
+
+## Visual preview 📱
+
+[Open the live visual gallery](https://kaldx5.github.io/NIBRAS-Showcase/) · [Explore selected HTML design screens](https://kaldx5.github.io/NIBRAS-Showcase/design/)
+
+<img src="assets/05_dashboard_dark.jpeg" width="230" alt="Real-device dashboard capture"> <img src="assets/10_atlas_map_daraa.jpeg" width="230" alt="Real-device atlas capture"> <img src="assets/02_product_detail_sugar.jpeg" width="230" alt="Real-device price-history capture">
+
+The design selection adds offline workflows, trust, contribution, store comparison, regions, merchants, business reporting and operations. HTML files render through the live gallery; GitHub itself displays HTML source rather than running it inside a README.

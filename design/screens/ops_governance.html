@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl" data-theme="dark" class="tier-rich">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حوكمة وحرّاس — نِبراس</title>
+<script>(function(){try{var p=new URLSearchParams(location.search),d=document.documentElement;var t=p.get('tier'),th=p.get('theme'),l=p.get('lang');if(t){d.className='tier-'+t;}if(th){d.setAttribute('data-theme',th);}if(l){d.setAttribute('lang',l);d.setAttribute('dir',l==='en'?'ltr':'rtl');}}catch(e){}})();</script>
+
+<link rel="stylesheet" href="../lib/fonts.css">
+<link rel="stylesheet" href="../material_tokens.css">
+<link rel="stylesheet" href="../material_components.css">
+<link rel="stylesheet" href="../material_screens.css">
+<link rel="stylesheet" href="../material_motion.css">
+<script src="../lib/switcher.js" defer></script>
+<style>
+  /* ── تخطيط محلّي — var() فقط، صفر hex خام ── */
+
+  .gov-page {
+    padding-block: var(--space-sm) var(--space-2xl);
+  }
+
+  /* رأس القسم */
+  .gov-section-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin: var(--space-lg) 0 var(--space-md);
+  }
+  .gov-section-head__icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: var(--accent-brand-tint);
+    color: var(--accent-brand);
+  }
+  .gov-section-head__icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .gov-section-head__title {
+    font-family: var(--font-ar-brand);
+    font-size: var(--type-title-medium-size);
+    font-weight: 700;
+    color: var(--ink-primary);
+  }
+
+  /* بطاقة حارس */
+  .guard-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-card);
+    box-shadow: var(--elev-2);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .guard-card + .guard-card {
+    margin-block-start: var(--space-md);
+  }
+
+  /* رأس البطاقة */
+  .guard-card__header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+  .guard-card__emblem {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+  }
+  .guard-card__emblem svg {
+    width: 24px;
+    height: 24px;
+  }
+  .guard-card__emblem--buyer   { background: var(--status-warn-tint);   color: var(--status-warn); }
+  .guard-card__emblem--sov     { background: var(--accent-brand-tint);  color: var(--accent-brand); }
+  .guard-card__emblem--kanon   { background: var(--status-info-tint); color: var(--status-info); }
+  .guard-card__emblem--publish { background: var(--status-trust-tint);  color: var(--status-trust); }
+
+  .guard-card__meta {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .guard-card__title {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-title-medium-size);
+    font-weight: 600;
+    color: var(--ink-primary);
+    line-height: var(--lh-title-medium);
+  }
+  .guard-card__subtitle {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-caption-size);
+    color: var(--ink-tertiary);
+    font-variant-numeric: tabular-nums;
+  }
+  .guard-card__toggle-wrap {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-xs);
+  }
+  .guard-card__status-label {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-label-size);
+    font-weight: 600;
+    color: var(--status-trust);
+    font-variant-numeric: tabular-nums;
+  }
+  .guard-card__status-label--warn {
+    color: var(--status-warn);
+  }
+
+  /* شريط النسبة */
+  .guard-bar-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .guard-bar-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm);
+  }
+  .guard-bar-head__label {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-caption-size);
+    font-weight: 600;
+    color: var(--ink-secondary);
+  }
+  .guard-bar-head__pct {
+    font-family: var(--font-ar-display);
+    font-weight: 900;
+    font-size: var(--type-title-large-size);
+    color: var(--accent-brand);
+    font-variant-numeric: tabular-nums;
+  }
+  .guard-bar-head__limit {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-label-size);
+    color: var(--ink-tertiary);
+    font-variant-numeric: tabular-nums;
+  }
+  .guard-bar {
+    height: 8px;
+    background: var(--line-hairline);
+    border-radius: var(--radius-pill);
+    overflow: visible;
+    position: relative;
+  }
+  .guard-bar__fill {
+    height: 100%;
+    border-radius: var(--radius-pill);
+    background: var(--accent-brand);
+    transition: width var(--dur-normal) var(--curve-standard);
+    position: relative;
+  }
+  .guard-bar__fill--safe   { background: var(--status-trust); }
+  .guard-bar__fill--warn   { background: var(--status-warn); }
+  .guard-bar__fill--danger { background: var(--status-danger); }
+  .guard-bar__limit-mark {
+    position: absolute;
+    inset-block-start: -3px;
+    height: 14px;
+    width: 2px;
+    background: var(--status-danger);
+    border-radius: var(--radius-pill);
+  }
+
+  /* فاصل المعلومات */
+  .guard-info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-input);
+    border-radius: var(--radius-sm);
+    border-inline-start: 3px solid var(--accent-brand-tint);
+  }
+  .guard-info-row--trust {
+    border-inline-start-color: var(--status-trust-tint);
+  }
+  .guard-info-row--warn {
+    border-inline-start-color: var(--status-warn-tint);
+    background: var(--status-warn-tint);
+  }
+  .guard-info-row__icon {
+    flex-shrink: 0;
+    margin-block-start: var(--space-2xs);
+    color: var(--ink-tertiary);
+  }
+  .guard-info-row__icon svg {
+    width: 14px;
+    height: 14px;
+  }
+  .guard-info-row--trust .guard-info-row__icon { color: var(--status-trust); }
+  .guard-info-row--warn  .guard-info-row__icon { color: var(--status-warn); }
+  .guard-info-row__text {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-caption-size);
+    color: var(--ink-secondary);
+    line-height: 1.5;
+  }
+  .guard-info-row__text strong {
+    font-weight: 700;
+    color: var(--ink-primary);
+  }
+
+  /* قائمة المناطق (للحارس السيادي) */
+  .region-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .region-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+  }
+  .region-row__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    flex-shrink: 0;
+  }
+  .region-row__dot--allowed  { background: var(--status-trust); }
+  .region-row__dot--excluded { background: var(--status-danger); }
+  .region-row__name {
+    flex: 1;
+    font-family: var(--font-ar-body);
+    font-size: var(--type-caption-size);
+    font-weight: 600;
+    color: var(--ink-primary);
+  }
+  .region-row__note {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-label-size);
+    color: var(--ink-tertiary);
+  }
+  .region-row--excluded .region-row__name {
+    color: var(--ink-tertiary);
+    text-decoration: line-through;
+    text-decoration-color: var(--status-danger);
+  }
+
+  /* مؤشّر k-anon */
+  .kanon-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+  }
+  .kanon-cell {
+    background: var(--bg-surface);
+    border-radius: var(--radius-sm);
+    padding: var(--space-sm) var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .kanon-cell__val {
+    font-family: var(--font-ar-display);
+    font-weight: 900;
+    font-size: var(--type-display-large-size);
+    color: var(--accent-brand);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .kanon-cell__val--ok  { color: var(--status-trust); }
+  .kanon-cell__val--low { color: var(--status-danger); }
+  .kanon-cell__label {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-label-size);
+    font-weight: 600;
+    color: var(--ink-tertiary);
+  }
+
+  /* شارة الإصدار */
+  .gov-version {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) 0;
+    margin-block-start: var(--space-sm);
+    border-block-start: 1px solid var(--line-hairline);
+  }
+  .gov-version__label {
+    font-family: var(--font-mono);
+    font-size: var(--type-label-size);
+    color: var(--ink-tertiary);
+    letter-spacing: .4px;
+  }
+  .gov-version__val {
+    font-family: var(--font-mono);
+    font-size: var(--type-label-size);
+    color: var(--accent-brand);
+    letter-spacing: .4px;
+  }
+
+  /* حالة ملخّص أعلى الشاشة */
+  .gov-summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: var(--status-trust-tint);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-block-end: var(--space-lg);
+  }
+  .gov-summary__icon {
+    flex-shrink: 0;
+    color: var(--status-trust);
+  }
+  .gov-summary__icon svg { width: 24px; height: 24px; }
+  .gov-summary__body {
+    flex: 1;
+  }
+  .gov-summary__title {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-title-medium-size);
+    font-weight: 600;
+    color: var(--ink-primary);
+  }
+  .gov-summary__sub {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-caption-size);
+    color: var(--ink-secondary);
+    margin-block-start: var(--space-2xs);
+    font-variant-numeric: tabular-nums;
+  }
+  .gov-summary__badge {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-2xs) var(--space-sm);
+    border-radius: var(--radius-pill);
+    background: var(--status-trust);
+    color: var(--bg-canvas);
+    font-family: var(--font-ar-body);
+    font-size: var(--type-label-size);
+    font-weight: 700;
+  }
+
+  /* أزرار التدقيق */
+  .audit-row {
+    display: flex;
+    gap: var(--space-sm);
+    row-gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+  .audit-row .btn {
+    font-size: var(--type-caption-size);
+    min-height: var(--tap-min);
+    padding: 0 var(--space-md);
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body><aside style="padding:12px;background:#241c0f;color:#ffe5a7;text-align:center;font:14px system-ui">Selected design demonstration · Example data · Not a live service</aside>
+<div class="app-frame app-frame--tall">
+
+  
+  <div class="status-bar">
+    <span class="status-bar__time bidi-num" aria-label="الوقت: ٩:٤١ صباحاً" data-ar-label="الوقت: ٩:٤١ صباحاً" data-en-label="Time: 9:41 AM">٩:٤١</span>
+    <span class="status-bar__icons" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 20h3v-6H2v6Zm5 0h3V9H7v11Zm5 0h3V4h-3v16Zm5 0h3v-9h-3v9Z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 18.5a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2ZM5.6 12.1l1.8 1.8a6.6 6.6 0 0 1 9.2 0l1.8-1.8a9.1 9.1 0 0 0-12.8 0ZM2 8.5l1.8 1.8a13.2 13.2 0 0 1 16.4 0L22 8.5a15.7 15.7 0 0 0-20 0Z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 8h14a2 2 0 0 1 2 2v.5h1.2v3H20v.5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2Zm1 2v4h12v-4H5Z"/></svg>
+    </span>
+  </div>
+
+  
+  <header class="app-topbar" role="banner">
+    <button class="icon-btn" aria-label="العودة" data-ar-label="العودة" data-en-label="Back" data-ar="العودة" data-en="Back">
+      <svg class="icon-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+    </button>
+    <h1 class="app-topbar__title" data-ar="الحوكمة" data-en="Governance">الحوكمة</h1>
+    <span class="app-topbar__spacer"></span>
+    <button class="icon-btn" aria-label="سجلّ التدقيق" data-ar-label="سجلّ التدقيق" data-en-label="Audit log" data-ar="سجلّ التدقيق" data-en="Audit log">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 12h6M9 16h4M4 6h16M4 10h16M4 14h4"/><rect x="4" y="4" width="16" height="16" rx="2"/>
+      </svg>
+    </button>
+  </header>
+
+  
+  <main class="screen-pad gov-page" aria-label="لوحة حوكمة وحرّاس نِبراس" data-ar-label="لوحة حوكمة وحرّاس نِبراس" data-en-label="Nibras Governance &amp; Guards Panel">
+
+    
+    <div class="gov-summary" role="status" aria-live="polite">
+      <span class="gov-summary__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/>
+        </svg>
+      </span>
+      <div class="gov-summary__body">
+        <div class="gov-summary__title" data-ar="جميع الحرّاس نشطة" data-en="All guards active">جميع الحرّاس نشطة</div>
+        <div class="gov-summary__sub" data-ar="آخر فحص: منذ ٣ دقائق · ٤ حرّاس · صفر انتهاكات" data-en="Last check: 3 min ago · 4 guards · 0 violations">آخر فحص: منذ ٣ دقائق · ٤ حرّاس · صفر انتهاكات</div>
+      </div>
+      <span class="gov-summary__badge" aria-label="حالة: مطمئنّ" data-ar-label="حالة: مطمئنّ" data-en-label="Status: Healthy">
+        <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm3.2 5.5-4 4a.7.7 0 0 1-1 0l-1.5-1.5a.7.7 0 0 1 1-1l1 1 3.5-3.5a.7.7 0 0 1 1 1Z"/></svg>
+        <span data-ar="مطمئنّ" data-en="Healthy">مطمئنّ</span>
+      </span>
+    </div>
+
+    
+    <div class="gov-section-head" aria-label="حرّاس التشغيل" data-ar-label="حرّاس التشغيل" data-en-label="Operational Guards">
+      <span class="gov-section-head__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 2.5 C10 7.5,15.5 9.5,15.25 14 C15.1 17.5,12.25 19.75,9.75 18.5 C12 18.1,13.5 16.5,13 13.75 C12.1 9.5,9.25 7,13.5 2.5 Z"/><path d="M10.5 21.5 C14 16.5,8.5 14.5,8.75 10 C8.9 6.5,11.75 4.25,14.25 5.5 C12 5.9,10.5 7.5,11 10.25 C11.9 14.5,14.75 17,10.5 21.5 Z" opacity=".5"/></svg>
+      </span>
+      <h2 class="gov-section-head__title" data-ar="حرّاس التشغيل" data-en="Operational Guards">حرّاس التشغيل</h2>
+    </div>
+
+    
+    <article class="guard-card" aria-labelledby="guard-buyer-title">
+      <div class="guard-card__header">
+        <span class="guard-card__emblem guard-card__emblem--buyer" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="12.01"/>
+          </svg>
+        </span>
+        <div class="guard-card__meta">
+          <div id="guard-buyer-title" class="guard-card__title" data-ar="سقف المشتري" data-en="Buyer Cap">سقف المشتري</div>
+          <div class="guard-card__subtitle" data-ar="F51 · يمنع هيمنة مشترٍ واحد على الطلب" data-en="F51 · Prevents single-buyer demand dominance">F51 · يمنع هيمنة مشترٍ واحد على الطلب</div>
+        </div>
+        <div class="guard-card__toggle-wrap">
+          <button class="toggle" role="switch" aria-checked="true" aria-label="تفعيل حارس سقف المشتري" data-ar-label="تفعيل حارس سقف المشتري" data-en-label="Enable Buyer Cap guard">
+            <span class="toggle__thumb"></span>
+          </button>
+          <span class="guard-card__status-label" data-ar="نشط" data-en="Active">نشط</span>
+        </div>
+      </div>
+
+      
+      <div class="guard-bar-wrap" aria-label="نسبة المشتري الحالي من إجمالي الطلب" data-ar-label="نسبة المشتري الحالي من إجمالي الطلب" data-en-label="Current buyer share of total demand">
+        <div class="guard-bar-head">
+          <span class="guard-bar-head__label" data-ar="الحصّة الحالية" data-en="Current share">الحصّة الحالية</span>
+          <span>
+            <span class="guard-bar-head__pct bidi-num" data-demo="1" aria-label="١٧ بالمئة" data-ar-label="١٧ بالمئة" data-en-label="17 percent">١٧٪</span>
+            <span class="guard-bar-head__limit" data-ar="(السقف ٢٥٪)" data-en="(Cap 25%)">(السقف ٢٥٪)</span>
+          </span>
+        </div>
+        <div class="guard-bar" role="progressbar" aria-valuenow="17" aria-valuemin="0" aria-valuemax="100" aria-label="نسبة حصّة المشتري ١٧ من ١٠٠" data-ar-label="نسبة حصّة المشتري ١٧ من ١٠٠" data-en-label="Buyer share 17 of 100">
+          <div class="guard-bar__fill guard-bar__fill--safe" style="width:17%"></div>
+          
+          <div class="guard-bar__limit-mark" style="inset-inline-end:75%" aria-hidden="true" title="الحدّ الأقصى ٢٥٪"></div>
+        </div>
+      </div>
+
+      <div class="guard-info-row guard-info-row--trust" role="note">
+        <span class="guard-info-row__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
+          </svg>
+        </span>
+        <p class="guard-info-row__text">
+          <span data-ar="أيّ مشترٍ يصل إلى " data-en="Any buyer reaching ">أيّ مشترٍ يصل إلى </span><strong data-ar="≤٢٥٪" data-en="≤25%">≤٢٥٪</strong><span data-ar=" من إجمالي الطلب اليومي في منطقة يُوقَف طلبه تلقائياً لحماية التوازن السوقي." data-en=" of daily regional demand volume is auto-halted to protect market balance."> من إجمالي الطلب اليومي في منطقة يُوقَف طلبه تلقائياً لحماية التوازن السوقي.</span>
+        </p>
+      </div>
+
+      <div class="audit-row">
+        <button class="btn btn--secondary btn--pill" aria-label="عرض سجلّ حارس سقف المشتري" data-ar-label="عرض سجلّ حارس سقف المشتري" data-en-label="View Buyer Cap guard event log" data-ar="سجلّ الأحداث" data-en="Event log">سجلّ الأحداث</button>
+        <button class="btn btn--ghost btn--pill" aria-label="ضبط قيمة سقف المشتري" data-ar-label="ضبط قيمة سقف المشتري" data-en-label="Adjust buyer cap value" data-ar="ضبط السقف" data-en="Adjust cap">ضبط السقف</button>
+      </div>
+
+      <div class="gov-version">
+        <span class="gov-version__label">آخر تطبيق</span>
+        <span class="gov-version__val bidi-num">٢٠٢٦-٠٦-٠٥ / ٠٧:١٢</span>
+        <span class="gov-version__label" style="margin-inline-start:auto;">حوادث اليوم</span>
+        <span class="gov-version__val bidi-num">٠</span>
+      </div>
+    </article>
+
+    
+    <article class="guard-card" aria-labelledby="guard-sov-title">
+      <div class="guard-card__header">
+        <span class="guard-card__emblem guard-card__emblem--sov" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 0 0 1 1h3m10-11 2 2m-2-2v10a1 1 0 0 1-1 1h-3m-6 0a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1m-6 0h6"/>
+          </svg>
+        </span>
+        <div class="guard-card__meta">
+          <div id="guard-sov-title" class="guard-card__title" data-ar="حارس السيادة A4" data-en="Sovereignty Guard A4">حارس السيادة A4</div>
+          <div class="guard-card__subtitle" data-ar="F52 · استبعاد إقليمي-سياسي؛ مستبنى من درعا/حوران" data-en="F52 · Geo-political exclusion; built for Daraa/Hauran">F52 · استبعاد إقليمي-سياسي؛ مستبنى من درعا/حوران</div>
+        </div>
+        <div class="guard-card__toggle-wrap">
+          <button class="toggle" role="switch" aria-checked="true" aria-label="تفعيل حارس السيادة A4" data-ar-label="تفعيل حارس السيادة A4" data-en-label="Enable Sovereignty Guard A4">
+            <span class="toggle__thumb"></span>
+          </button>
+          <span class="guard-card__status-label" data-ar="نشط" data-en="Active">نشط</span>
+        </div>
+      </div>
+
+      
+      <div class="region-list" aria-label="حالة المناطق والبلدات" data-ar-label="حالة المناطق والبلدات" data-en-label="Region and town status">
+        
+        <div class="region-row region-row--excluded" role="listitem" aria-label="الجولان-إقليم: مستبعد" data-ar-label="الجولان-إقليم: مستبعد" data-en-label="Golan territory: Excluded">
+          <span class="region-row__dot region-row__dot--excluded" aria-hidden="true"></span>
+          <span class="region-row__name" data-ar="الجولان (إقليم)" data-en="Golan (territory)">الجولان (إقليم)</span>
+          <span class="avail-chip avail-chip--low" aria-label="مستبعد" data-ar-label="مستبعد" data-en-label="Excluded">
+            <span class="avail-chip__dot" aria-hidden="true"></span>
+            <span data-ar="مستبعد" data-en="Excluded">مستبعد</span>
+          </span>
+        </div>
+        
+        <div class="region-row" role="listitem" aria-label="سحم الجولان: بلدة مسموحة — ضمن محافظة درعا" data-ar-label="سحم الجولان: بلدة مسموحة — ضمن محافظة درعا" data-en-label="Sahm al-Jawlan: Allowed town — within Daraa governorate">
+          <span class="region-row__dot region-row__dot--allowed" aria-hidden="true"></span>
+          <span class="region-row__name" data-ar="سحم الجولان" data-en="Sahm al-Jawlan">سحم الجولان</span>
+          <span class="avail-chip avail-chip--high" aria-label="مسموحة" data-ar-label="مسموحة" data-en-label="Allowed">
+            <span class="avail-chip__dot" aria-hidden="true"></span>
+            <span data-ar="مسموح" data-en="Allowed">مسموح</span>
+          </span>
+          <span class="region-row__note" data-ar="درعا ✓" data-en="Daraa ✓">درعا ✓</span>
+        </div>
+        
+        <div class="region-row" role="listitem" aria-label="درعا المدينة: مسموحة" data-ar-label="درعا المدينة: مسموحة" data-en-label="Daraa City: Allowed">
+          <span class="region-row__dot region-row__dot--allowed" aria-hidden="true"></span>
+          <span class="region-row__name" data-ar="درعا المدينة" data-en="Daraa City">درعا المدينة</span>
+          <span class="avail-chip avail-chip--high" aria-label="مسموحة" data-ar-label="مسموحة" data-en-label="Allowed">
+            <span class="avail-chip__dot" aria-hidden="true"></span>
+            <span data-ar="مسموح" data-en="Allowed">مسموح</span>
+          </span>
+        </div>
+        
+        <div class="region-row" role="listitem" aria-label="المزيريب: مسموحة" data-ar-label="المزيريب: مسموحة" data-en-label="al-Muzayrib: Allowed">
+          <span class="region-row__dot region-row__dot--allowed" aria-hidden="true"></span>
+          <span class="region-row__name" data-ar="المزيريب" data-en="al-Muzayrib">المزيريب</span>
+          <span class="avail-chip avail-chip--high" aria-label="مسموحة" data-ar-label="مسموحة" data-en-label="Allowed">
+            <span class="avail-chip__dot" aria-hidden="true"></span>
+            <span data-ar="مسموح" data-en="Allowed">مسموح</span>
+          </span>
+        </div>
+        
+        <div class="region-row" role="listitem" aria-label="إنخل: مسموحة" data-ar-label="إنخل: مسموحة" data-en-label="Inkhil: Allowed">
+          <span class="region-row__dot region-row__dot--allowed" aria-hidden="true"></span>
+          <span class="region-row__name" data-ar="إنخل" data-en="Inkhil">إنخل</span>
+          <span class="avail-chip avail-chip--high" aria-label="مسموحة" data-ar-label="مسموحة" data-en-label="Allowed">
+            <span class="avail-chip__dot" aria-hidden="true"></span>
+            <span data-ar="مسموح" data-en="Allowed">مسموح</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="guard-info-row" role="note">
+        <span class="guard-info-row__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
+          </svg>
+        </span>
+        <p class="guard-info-row__text">
+          <span data-ar="الإقليم الجغرافي «الجولان» مستبعد كليّاً من الخرائط والبيانات والنتائج. " data-en="The 'Golan' territory is fully excluded from maps, data, and results. ">الإقليم الجغرافي «الجولان» مستبعد كليّاً من الخرائط والبيانات والنتائج. </span>
+          <strong data-ar="سحم الجولان" data-en="Sahm al-Jawlan">سحم الجولان</strong>
+          <span data-ar=" بلدةٌ في محافظة درعا مسموحة صراحةً ولا تُحذف." data-en=" is a town in Daraa governorate and is explicitly allowed — not suppressed."> بلدةٌ في محافظة درعا مسموحة صراحةً ولا تُحذف.</span>
+        </p>
+      </div>
+
+      <div class="audit-row">
+        <button class="btn btn--secondary btn--pill" aria-label="عرض خريطة المناطق" data-ar-label="عرض خريطة المناطق" data-en-label="View region map" data-ar="خريطة المناطق" data-en="Region map">خريطة المناطق</button>
+        <button class="btn btn--ghost btn--pill" aria-label="سجلّ استثناءات الحارس السيادي" data-ar-label="سجلّ استثناءات الحارس السيادي" data-en-label="Sovereignty guard exclusion log" data-ar="سجلّ الاستثناءات" data-en="Exclusion log">سجلّ الاستثناءات</button>
+      </div>
+
+      <div class="gov-version">
+        <span class="gov-version__label">إصدار القواعد</span>
+        <span class="gov-version__val">A4.2</span>
+        <span class="gov-version__label" style="margin-inline-start:auto;">حوادث اليوم</span>
+        <span class="gov-version__val bidi-num">٠</span>
+      </div>
+    </article>
+
+    
+    <article class="guard-card" aria-labelledby="guard-kanon-title">
+      <div class="guard-card__header">
+        <span class="guard-card__emblem guard-card__emblem--kanon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h1v6H9zm5 0h1v6h-1z"/>
+          </svg>
+        </span>
+        <div class="guard-card__meta">
+          <div id="guard-kanon-title" class="guard-card__title" data-ar="k-anon كبت الخلايا" data-en="k-anon Cell Suppression">k-anon كبت الخلايا</div>
+          <div class="guard-card__subtitle" data-ar="F55 · يخفي أيّ خليّة بيانات n&lt;١٠" data-en="F55 · Suppresses any cell with n&lt;10">F55 · يخفي أيّ خليّة بيانات n&lt;١٠</div>
+        </div>
+        <div class="guard-card__toggle-wrap">
+          <button class="toggle" role="switch" aria-checked="true" aria-label="تفعيل حارس k-anon" data-ar-label="تفعيل حارس k-anon" data-en-label="Enable k-anon guard">
+            <span class="toggle__thumb"></span>
+          </button>
+          <span class="guard-card__status-label" data-ar="نشط" data-en="Active">نشط</span>
+        </div>
+      </div>
+
+      
+      <div class="kanon-grid" aria-label="إحصائيات كبت الخلايا اليوم" data-ar-label="إحصائيات كبت الخلايا اليوم" data-en-label="Cell suppression statistics today">
+        <div class="kanon-cell" role="listitem" aria-label="خلايا مكبوتة اليوم: ٣" data-ar-label="خلايا مكبوتة اليوم: ٣" data-en-label="Cells suppressed today: 3">
+          <span class="kanon-cell__val kanon-cell__val--ok bidi-num" data-demo="1" aria-label="٣" data-ar-label="٣" data-en-label="3">٣</span>
+          <span class="kanon-cell__label" data-ar="خلية مكبوتة اليوم" data-en="Cells suppressed today">خلية مكبوتة اليوم</span>
+        </div>
+        <div class="kanon-cell" role="listitem" aria-label="حدّ الخصوصية: n أقل من ١٠" data-ar-label="حدّ الخصوصية: n أقل من ١٠" data-en-label="Privacy threshold: n less than 10">
+          <span class="kanon-cell__val bidi-num" aria-label="أقل من ١٠" data-ar-label="أقل من ١٠" data-en-label="less than 10">n&lt;١٠</span>
+          <span class="kanon-cell__label" data-ar="حدّ الخصوصية" data-en="Privacy threshold">حدّ الخصوصية</span>
+        </div>
+        <div class="kanon-cell" role="listitem" aria-label="إجمالي الطلبات المعالجة: ٤٨٢" data-ar-label="إجمالي الطلبات المعالجة: ٤٨٢" data-en-label="Total queries processed: 482">
+          <span class="kanon-cell__val bidi-num" data-demo="1" aria-label="٤٨٢" data-ar-label="٤٨٢" data-en-label="482">٤٨٢</span>
+          <span class="kanon-cell__label" data-ar="استعلام مُعالَج" data-en="Queries processed">استعلام مُعالَج</span>
+        </div>
+        <div class="kanon-cell" role="listitem" aria-label="نسبة الكبت ٠٫٦ بالمئة" data-ar-label="نسبة الكبت ٠٫٦ بالمئة" data-en-label="Suppression rate 0.6 percent">
+          <span class="kanon-cell__val kanon-cell__val--ok bidi-num" aria-label="٠.٦٪" data-ar-label="٠.٦٪" data-en-label="0.6%">٠.٦٪</span>
+          <span class="kanon-cell__label" data-ar="نسبة الكبت" data-en="Suppression rate">نسبة الكبت</span>
+        </div>
+      </div>
+
+      <div class="guard-info-row guard-info-row--trust" role="note">
+        <span class="guard-info-row__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
+          </svg>
+        </span>
+        <p class="guard-info-row__text">
+          <span data-ar="أيّ خليّة تحتوي على أقلّ من " data-en="Any cell containing fewer than ">أيّ خليّة تحتوي على أقلّ من </span><strong data-ar="١٠ سجلّات" data-en="10 records">١٠ سجلّات</strong><span data-ar=" تُحجَب تلقائياً وتُستبدل بعلامة «—» في الجداول والتقارير والتصدير. يحمي هذا خصوصيّة التجّار الصغار والمستخدمين الأفراد." data-en=" is automatically suppressed and replaced with '—' in tables, reports, and exports. This protects privacy of small traders and individual users."> تُحجَب تلقائياً وتُستبدل بعلامة «—» في الجداول والتقارير والتصدير. يحمي هذا خصوصيّة التجّار الصغار والمستخدمين الأفراد.</span>
+        </p>
+      </div>
+
+      <div class="audit-row">
+        <button class="btn btn--secondary btn--pill" aria-label="عرض سجلّ الخلايا المكبوتة" data-ar-label="عرض سجلّ الخلايا المكبوتة" data-en-label="View suppressed cells log" data-ar="سجلّ الخلايا" data-en="Cell log">سجلّ الخلايا</button>
+        <button class="btn btn--ghost btn--pill" aria-label="ضبط عتبة الكبت" data-ar-label="ضبط عتبة الكبت" data-en-label="Adjust suppression threshold" data-ar="ضبط العتبة" data-en="Adjust threshold">ضبط العتبة</button>
+      </div>
+
+      <div class="gov-version">
+        <span class="gov-version__label">آخر فحص</span>
+        <span class="gov-version__val bidi-num">٢٠٢٦-٠٦-٠٥ / ٠٩:٣٨</span>
+        <span class="gov-version__label" style="margin-inline-start:auto;">حوادث اليوم</span>
+        <span class="gov-version__val bidi-num">٠</span>
+      </div>
+    </article>
+
+    
+    <article class="guard-card" aria-labelledby="guard-pub-title">
+      <div class="guard-card__header">
+        <span class="guard-card__emblem guard-card__emblem--publish" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </span>
+        <div class="guard-card__meta">
+          <div id="guard-pub-title" class="guard-card__title" data-ar="حارس النشر" data-en="Publication Guard">حارس النشر</div>
+          <div class="guard-card__subtitle" data-ar="F56 · مجمَّع لا خام — يمنع تسريب البيانات الفردية" data-en="F56 · Aggregated only — prevents raw individual data leaks">F56 · مجمَّع لا خام — يمنع تسريب البيانات الفردية</div>
+        </div>
+        <div class="guard-card__toggle-wrap">
+          <button class="toggle" role="switch" aria-checked="true" aria-label="تفعيل حارس النشر" data-ar-label="تفعيل حارس النشر" data-en-label="Enable Publication guard">
+            <span class="toggle__thumb"></span>
+          </button>
+          <span class="guard-card__status-label" data-ar="نشط" data-en="Active">نشط</span>
+        </div>
+      </div>
+
+      
+      <div class="guard-bar-wrap" aria-label="نسبة الطلبات المجمَّعة من إجمالي النشر اليوم" data-ar-label="نسبة الطلبات المجمَّعة من إجمالي النشر اليوم" data-en-label="Aggregated requests as a share of total publication today">
+        <div class="guard-bar-head">
+          <span class="guard-bar-head__label" data-ar="طلبات مجمَّعة اليوم" data-en="Aggregated requests today">طلبات مجمَّعة اليوم</span>
+          <span>
+            <span class="guard-bar-head__pct bidi-num" aria-label="١٠٠ بالمئة" data-ar-label="١٠٠ بالمئة" data-en-label="100 percent">١٠٠٪</span>
+          </span>
+        </div>
+        <div class="guard-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" aria-label="نسبة الطلبات المجمّعة ١٠٠ من ١٠٠" data-ar-label="نسبة الطلبات المجمّعة ١٠٠ من ١٠٠" data-en-label="Aggregated requests 100 of 100">
+          <div class="guard-bar__fill guard-bar__fill--safe" style="width:100%"></div>
+        </div>
+      </div>
+
+      
+      <div class="x-scroll">
+      <table class="cmp-table" aria-label="أنواع نشر البيانات المسموحة والمحظورة" data-ar-label="أنواع نشر البيانات المسموحة والمحظورة" data-en-label="Allowed and blocked data publication types" style="margin-block-start:0;">
+        <thead>
+          <tr>
+            <th scope="col" data-ar="النوع" data-en="Type">النوع</th>
+            <th scope="col" data-ar="الحالة" data-en="Status">الحالة</th>
+            <th scope="col" data-ar="ملاحظة" data-en="Note">ملاحظة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-ar="متوسّط سعر المنطقة" data-en="Area price average">متوسّط سعر المنطقة</td>
+            <td>
+              <span class="avail-chip avail-chip--high" aria-label="مسموح" data-ar-label="مسموح" data-en-label="Allowed">
+                <span class="avail-chip__dot" aria-hidden="true"></span>
+                <span data-ar="مسموح" data-en="Allowed">مسموح</span>
+              </span>
+            </td>
+            <td class="t-caption" data-ar="مجمَّع ≥١٠" data-en="Aggregated ≥10">مجمَّع ≥١٠</td>
+          </tr>
+          <tr>
+            <td data-ar="بيانات تاجر بعينه" data-en="Individual merchant data">بيانات تاجر بعينه</td>
+            <td>
+              <span class="avail-chip avail-chip--low" aria-label="محظور" data-ar-label="محظور" data-en-label="Blocked">
+                <span class="avail-chip__dot" aria-hidden="true"></span>
+                <span data-ar="محظور" data-en="Blocked">محظور</span>
+              </span>
+            </td>
+            <td class="t-caption" data-ar="خام-فردي" data-en="Raw individual">خام-فردي</td>
+          </tr>
+          <tr>
+            <td data-ar="نطاق سعري (min/max)" data-en="Price range (min/max)">نطاق سعري (min/max)</td>
+            <td>
+              <span class="avail-chip avail-chip--high" aria-label="مسموح" data-ar-label="مسموح" data-en-label="Allowed">
+                <span class="avail-chip__dot" aria-hidden="true"></span>
+                <span data-ar="مسموح" data-en="Allowed">مسموح</span>
+              </span>
+            </td>
+            <td class="t-caption" data-ar="≥٣ تجّار" data-en="≥3 merchants">≥٣ تجّار</td>
+          </tr>
+          <tr>
+            <td data-ar="بيانات المستخدم الخام" data-en="Raw user data">بيانات المستخدم الخام</td>
+            <td>
+              <span class="avail-chip avail-chip--low" aria-label="محظور" data-ar-label="محظور" data-en-label="Blocked">
+                <span class="avail-chip__dot" aria-hidden="true"></span>
+                <span data-ar="محظور" data-en="Blocked">محظور</span>
+              </span>
+            </td>
+            <td class="t-caption" data-ar="دائماً" data-en="Always">دائماً</td>
+          </tr>
+          <tr>
+            <td data-ar="تقارير التوجّهات (أسبوعي)" data-en="Trend reports (weekly)">تقارير التوجّهات (أسبوعي)</td>
+            <td>
+              <span class="avail-chip avail-chip--high" aria-label="مسموح" data-ar-label="مسموح" data-en-label="Allowed">
+                <span class="avail-chip__dot" aria-hidden="true"></span>
+                <span data-ar="مسموح" data-en="Allowed">مسموح</span>
+              </span>
+            </td>
+            <td class="t-caption" data-ar="مجمَّع ≥٥٠" data-en="Aggregated ≥50">مجمَّع ≥٥٠</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="guard-info-row guard-info-row--trust" role="note">
+        <span class="guard-info-row__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
+          </svg>
+        </span>
+        <p class="guard-info-row__text">
+          <span data-ar="جميع البيانات المنشورة خارجياً " data-en="All externally published data ">جميع البيانات المنشورة خارجياً </span><strong data-ar="مجمَّعة حصراً" data-en="aggregated only">مجمَّعة حصراً</strong><span data-ar=". لا تُنشر سجلّات خام لأيّ مستخدم أو تاجر بصرف النظر عن المصدر." data-en=". No raw records for any user or merchant are ever published, regardless of source.">. لا تُنشر سجلّات خام لأيّ مستخدم أو تاجر بصرف النظر عن المصدر.</span>
+        </p>
+      </div>
+
+      <div class="audit-row">
+        <button class="btn btn--secondary btn--pill" aria-label="عرض سجلّ محاولات النشر" data-ar-label="عرض سجلّ محاولات النشر" data-en-label="View publication attempts log" data-ar="سجلّ النشر" data-en="Publish log">سجلّ النشر</button>
+        <button class="btn btn--ghost btn--pill" aria-label="اختبار قواعد النشر" data-ar-label="اختبار قواعد النشر" data-en-label="Test publication rules" data-ar="اختبار القواعد" data-en="Test rules">اختبار القواعد</button>
+      </div>
+
+      <div class="gov-version">
+        <span class="gov-version__label">آخر تحديث</span>
+        <span class="gov-version__val bidi-num">٢٠٢٦-٠٦-٠٤ / ١٤:٠٠</span>
+        <span class="gov-version__label" style="margin-inline-start:auto;">حوادث اليوم</span>
+        <span class="gov-version__val bidi-num">٠</span>
+      </div>
+    </article>
+
+    
+    <div style="margin-block-start:var(--space-xl);display:flex;align-items:center;gap:var(--space-sm);padding-block-start:var(--space-md);border-block-start:1px solid var(--line-hairline);">
+      <span style="font-family:var(--font-mono);font-size:var(--type-label-size);color:var(--ink-tertiary);">نِبراس · نظام الحوكمة</span>
+      <span style="font-family:var(--font-mono);font-size:var(--type-label-size);color:var(--accent-brand);margin-inline-start:auto;">V5.4 · F51/F52/F55/F56</span>
+    </div>
+
+  </main>
+
+  
+  <nav class="bottom-nav" aria-label="التنقّل الرئيسي" data-ar-label="التنقّل الرئيسي" data-en-label="Main navigation">
+    <button class="nav-cell" aria-label="الرئيسية" data-ar-label="الرئيسية" data-en-label="Home" data-ar="الرئيسية" data-en="Home">
+      <svg class="nav-cell__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 0 0 1 1h3m10-11 2 2m-2-2v10a1 1 0 0 1-1 1h-3m-6 0a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1m-6 0h6"/>
+      </svg>
+      <span class="nav-cell__label" aria-hidden="true" data-ar="الرئيسية" data-en="Home">الرئيسية</span>
+    </button>
+    <button class="nav-cell" aria-label="المنتجات" data-ar-label="المنتجات" data-en-label="Products" data-ar="المنتجات" data-en="Products">
+      <svg class="nav-cell__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <span class="nav-cell__label" aria-hidden="true" data-ar="المنتجات" data-en="Products">المنتجات</span>
+    </button>
+    <button class="nav-cell nav-cell--active" aria-label="الحوكمة — محدد" data-ar-label="الحوكمة — محدد" data-en-label="Governance — selected" aria-current="page" data-ar="الحوكمة" data-en="Governance">
+      <svg class="nav-cell__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+      </svg>
+      <span class="nav-cell__label" aria-hidden="true" data-ar="الحوكمة" data-en="Governance">الحوكمة</span>
+    </button>
+    <button class="nav-cell" aria-label="الإعدادات" data-ar-label="الإعدادات" data-en-label="Settings" data-ar="الإعدادات" data-en="Settings">
+      <svg class="nav-cell__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/>
+      </svg>
+      <span class="nav-cell__label" aria-hidden="true" data-ar="الإعدادات" data-en="Settings">الإعدادات</span>
+    </button>
+    <div class="nav-indicator" style="inset-inline-end:calc(25% - 12px);" aria-hidden="true"></div>
+  </nav>
+
+</div>
+</body>
+</html>

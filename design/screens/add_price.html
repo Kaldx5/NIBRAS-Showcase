@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl" data-theme="dark" class="tier-rich">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إضافة سعر — نِبراس</title>
+<script>(function(){try{var p=new URLSearchParams(location.search),d=document.documentElement;var t=p.get('tier'),th=p.get('theme'),l=p.get('lang');if(t){d.className='tier-'+t;}if(th){d.setAttribute('data-theme',th);}if(l){d.setAttribute('lang',l);d.setAttribute('dir',l==='en'?'ltr':'rtl');}}catch(e){}})();</script>
+
+<link rel="stylesheet" href="../lib/fonts.css">
+<link rel="stylesheet" href="../material_tokens.css">
+<link rel="stylesheet" href="../material_components.css">
+<link rel="stylesheet" href="../material_screens.css">
+<link rel="stylesheet" href="../material_motion.css">
+<script src="../lib/switcher.js" defer></script>
+<style>
+  /* تخطيط ثانوي محليّ — var() فقط، لا hex */
+  .ap-form{ padding-inline:var(--space-md); padding-block-start:var(--space-md); }
+  .ap-form > * + *{ margin-block-start:var(--space-lg); }
+  .ap-qty{ display:flex; align-items:center; justify-content:space-between; gap:var(--space-md); }
+  .ap-qty__label{ font-family:var(--font-ar-body); font-size:var(--type-caption-size); font-weight:600; color:var(--ink-secondary); }
+  .ap-currency{ margin-block-start:var(--space-sm); display:flex; }
+  .ap-currency .segmented__item{ flex:1; min-height:44px; }
+  .ap-hint{ display:flex; flex-direction:column; gap:var(--space-md); }
+  .ap-hint__head{ display:flex; align-items:flex-start; gap:var(--space-md); }
+  .ap-hint__icon{ width:40px; height:40px; flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; border-radius:var(--radius-sm); background:var(--accent-brand-tint); color:var(--accent-brand); }
+  .ap-hint__icon svg{ width:22px; height:22px; }
+  .ap-hint__body{ flex:1; min-width:0; display:flex; flex-direction:column; gap:var(--space-xs); }
+  .ap-hint__title{ font-family:var(--font-ar-body); font-size:var(--type-title-medium-size); font-weight:600; color:var(--ink-primary); }
+  /* بلاطة رفع صورة (neu-tile موسّعة عرضيّاً) */
+  .ap-photo{ aspect-ratio:auto; min-height:120px; width:100%; padding:var(--space-md); }
+  .ap-photo__hint{ font-family:var(--font-ar-body); font-size:var(--type-label-size); color:var(--ink-tertiary); text-align:center; }
+</style>
+</head>
+<body><aside style="padding:12px;background:#241c0f;color:#ffe5a7;text-align:center;font:14px system-ui">Selected design demonstration · Example data · Not a live service</aside>
+<div class="app-frame app-frame--tall mo-page">
+
+  
+  <div class="status-bar">
+    <span class="status-bar__time bidi-num">٩:٤١</span>
+    <span class="status-bar__icons" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h.01M6 20v-2M10 20v-5M14 20v-8M18 20v-11"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13a10 10 0 0 1 14 0M8.5 16.5a5 5 0 0 1 7 0M12 20h.01"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/></svg>
+    </span>
+  </div>
+
+  
+  <header class="app-topbar">
+    <button class="icon-btn mo-press" type="button" aria-label="رجوع" data-ar-label="رجوع" data-en-label="Back">
+      <svg class="icon-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <h1 class="app-topbar__title" data-ar="أضف سعراً" data-en="Add a price">أضف سعراً</h1>
+  </header>
+
+  
+  <form class="ap-form mo-stagger" onsubmit="return false">
+
+    
+    <div class="field">
+      <label class="field__label" for="ap-product" data-ar="المنتج" data-en="Product">المنتج</label>
+      <div class="field__box">
+        <select class="field__control" id="ap-product">
+          <option value="sugar" data-ar="سكر — كيس ٥ كغ" data-en="Sugar — 5 kg bag">سكر — كيس ٥ كغ</option>
+          <option value="sunflower-oil" data-ar="زيت دوّار الشمس — صفيحة ١٦ ل" data-en="Sunflower oil — 16 L tin">زيت دوّار الشمس — صفيحة ١٦ ل</option>
+          <option value="egyptian-rice" data-ar="رزّ مصري — كيس ١ كغ" data-en="Egyptian rice — 1 kg bag">رزّ مصري — كيس ١ كغ</option>
+          <option value="bread" data-ar="ربطة خبز — ٨ أرغفة" data-en="Bread bundle — 8 loaves">ربطة خبز — ٨ أرغفة</option>
+          <option value="red-lentils" data-ar="عدس أحمر مجروش — ١ كغ" data-en="Red split lentils — 1 kg">عدس أحمر مجروش — ١ كغ</option>
+          <option value="gas" data-ar="أسطوانة غاز منزلي" data-en="Household gas cylinder">أسطوانة غاز منزلي</option>
+        </select>
+        <span class="field__affix" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      </div>
+      <span class="field__hint" data-ar="اختر المنتج من قائمة درعا" data-en="Choose a product from the Daraa list">اختر المنتج من قائمة درعا</span>
+    </div>
+
+    
+    <div class="field">
+      <label class="field__label" for="ap-price" data-ar="السعر" data-en="Price">السعر</label>
+      <div class="field__box">
+        <input class="field__control tabular" id="ap-price" type="text" inputmode="numeric" placeholder="٣١٥" value="٣١٥" data-ar-placeholder="٣١٥" data-en-placeholder="315" data-demo="1">
+        <span class="field__affix bidi-num">ل.س</span>
+      </div>
+      <div class="segmented ap-currency" role="group" aria-label="نوع العملة" data-ar-label="نوع العملة" data-en-label="Currency type">
+        <button class="segmented__item is-active mo-press" type="button" aria-pressed="true" data-ar="ل.س جديدة" data-en="New SYP">ل.س جديدة</button>
+        <button class="segmented__item mo-press" type="button" aria-pressed="false" data-ar="ل.س قديمة" data-en="Old SYP">ل.س قديمة</button>
+        <button class="segmented__item mo-press" type="button" aria-pressed="false" data-ar="دولار" data-en="USD">دولار</button>
+      </div>
+    </div>
+
+    
+    <div class="ap-qty">
+      <span class="ap-qty__label" data-ar="الكمية المُشتراة" data-en="Quantity bought">الكمية المُشتراة</span>
+      <div class="stepper neu" role="group" aria-label="الكمية" data-ar-label="الكمية" data-en-label="Quantity">
+        <button class="stepper__btn neu mo-press" type="button" aria-label="إنقاص الكمية" data-ar="إنقاص الكمية" data-en="Decrease quantity">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg>
+        </button>
+        <span class="stepper__value" aria-live="polite">١</span>
+        <button class="stepper__btn neu mo-press" type="button" aria-label="زيادة الكمية" data-ar="زيادة الكمية" data-en="Increase quantity">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+    </div>
+
+    
+    <div class="ap-qty">
+      <span class="ap-qty__label" data-ar="الوحدة بالعبوة (كغ/ل)" data-en="Units per pack (kg/L)">الوحدة بالعبوة (كغ/ل)</span>
+      <div class="stepper neu" role="group" aria-label="الوحدة بالعبوة" data-ar-label="الوحدة بالعبوة" data-en-label="Units per pack">
+        <button class="stepper__btn neu mo-press" type="button" aria-label="إنقاص الوحدة" data-ar="إنقاص الوحدة" data-en="Decrease units">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg>
+        </button>
+        <span class="stepper__value" aria-live="polite">٥</span>
+        <button class="stepper__btn neu mo-press" type="button" aria-label="زيادة الوحدة" data-ar="زيادة الوحدة" data-en="Increase units">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+    </div>
+
+    
+    <div class="field">
+      <label class="field__label" data-ar="صورة الفاتورة أو الرف" data-en="Receipt or shelf photo">صورة الفاتورة أو الرف</label>
+      <p class="field__hint" style="margin-block-end:var(--space-xs)" data-ar="الصورة ترفع درجة ثقة السعر بشكل ملحوظ — يُنصح بها بشدّة" data-en="A photo significantly raises the price trust score — strongly recommended">الصورة ترفع درجة ثقة السعر بشكل ملحوظ — يُنصح بها بشدّة</p>
+      <button class="neu-tile mo-press ap-photo" type="button" aria-label="أضف صورة للفاتورة أو رفّ المتجر" data-ar-label="أضف صورة للفاتورة أو رفّ المتجر" data-en-label="Add a photo of the receipt or shelf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></svg>
+        <span class="neu-tile__label" data-ar="أضف صورة" data-en="Add photo">أضف صورة</span>
+        <span class="ap-photo__hint" data-ar="صورة الرف أو الفاتورة تُعزّز ثقة السعر" data-en="A shelf or receipt photo strengthens price trust">صورة الرف أو الفاتورة تُعزّز ثقة السعر</span>
+      </button>
+    </div>
+
+    
+    <div class="field">
+      <label class="field__label" for="ap-note" data-ar="ملاحظة (اختياري)" data-en="Note (optional)">ملاحظة (اختياري)</label>
+      <div class="field__box">
+        <input class="field__control" id="ap-note" type="text" placeholder="مثال: الميدان — طريق السد، السعر شامل التوصيل" data-ar-ph="مثال: الميدان — طريق السد، السعر شامل التوصيل" data-en-ph="e.g. Al-Maydan — Al-Sadd Road, price includes delivery">
+      </div>
+      <span class="field__hint" data-ar="حيّ أو سوق المصدر يرفع ثقة السعر" data-en="Source neighborhood or market raises price trust">حيّ أو سوق المصدر يرفع ثقة السعر</span>
+    </div>
+
+    
+    <div class="card ap-hint">
+      <div class="ap-hint__head">
+        <span class="ap-hint__icon mo-pulse-trust" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 2.5 C10 7.5,15.5 9.5,15.25 14 C15.1 17.5,12.25 19.75,9.75 18.5 C12 18.1,13.5 16.5,13 13.75 C12.1 9.5,9.25 7,13.5 2.5 Z"/><path d="M10.5 21.5 C14 16.5,8.5 14.5,8.75 10 C8.9 6.5,11.75 4.25,14.25 5.5 C12 5.9,10.5 7.5,11 10.25 C11.9 14.5,14.75 17,10.5 21.5 Z" opacity=".5"/></svg>
+        </span>
+        <div class="ap-hint__body">
+          <h2 class="ap-hint__title" data-ar="سعرك يبني الثقة" data-en="Your price builds trust">سعرك يبني الثقة</h2>
+          <p class="t-body" style="margin:0" data-ar="حدّد المنتج والحيّ بدقّة (درعا البلد، الميدان، طريق السد). الأسعار الموثّقة من السوق نفسه تُعزّز درجة الثقة لكل من يقرأها." data-en="Specify the product and neighborhood precisely (Daraa al-Balad, Al-Maydan, Al-Sadd Road). Prices verified from the same market raise the trust score for everyone who reads them.">حدّد المنتج والحيّ بدقّة (درعا البلد، الميدان، طريق السد). الأسعار الموثّقة من السوق نفسه تُعزّز درجة الثقة لكل من يقرأها.</p>
+        </div>
+      </div>
+      <div class="trust-pills" role="list" aria-label="ما يرفع درجة الثقة" data-ar-label="ما يرفع درجة الثقة" data-en-label="What raises the trust score">
+        <span class="trust-pill trust-pill--high" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/></svg>
+          <span data-ar="صورة" data-en="Photo">صورة</span>
+        </span>
+        <span class="trust-pill trust-pill--high" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="11" r="2.4"/></svg>
+          <span data-ar="حيّ دقيق" data-en="Exact area">حيّ دقيق</span>
+        </span>
+        <span class="trust-pill trust-pill--high" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span data-ar="سعر طازج" data-en="Fresh price">سعر طازج</span>
+        </span>
+      </div>
+    </div>
+
+  </form>
+
+  
+  <div class="app-frame__bottom">
+    <button class="btn btn--primary btn--block btn--lg mo-press" type="submit" data-ar="أرسل السعر" data-en="Submit price">أرسل السعر</button>
+  </div>
+
+</div>
+</body>
+</html>

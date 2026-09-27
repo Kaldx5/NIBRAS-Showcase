@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl" data-theme="dark" class="tier-rich">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مقارنة المتاجر — نِبراس</title>
+<script>(function(){try{var p=new URLSearchParams(location.search),d=document.documentElement;var t=p.get('tier'),th=p.get('theme'),l=p.get('lang');if(t){d.className='tier-'+t;}if(th){d.setAttribute('data-theme',th);}if(l){d.setAttribute('lang',l);d.setAttribute('dir',l==='en'?'ltr':'rtl');}}catch(e){}})();</script>
+
+<link rel="stylesheet" href="../lib/fonts.css">
+<link rel="stylesheet" href="../material_tokens.css">
+<link rel="stylesheet" href="../material_components.css">
+<link rel="stylesheet" href="../material_screens.css">
+<link rel="stylesheet" href="../material_motion.css">
+<script src="../lib/switcher.js" defer></script>
+<style>
+  /* تخطيط ثانوي محلّي فقط — var() حصراً، لا hex خام */
+  .sc-pad{ padding-inline:var(--space-md); }
+  .sc-sub{ margin:var(--space-md) var(--space-md) 0; display:flex; align-items:center; gap:var(--space-sm); flex-wrap:wrap; min-width:0; }
+  .sc-sub .t-title-md{ flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .sc-chips{ display:flex; gap:var(--space-sm); overflow-x:auto; padding:var(--space-md) var(--space-md) var(--space-xs); }
+  .sc-chip-btn{ border:0; cursor:pointer; flex-shrink:0; font:inherit; }
+  .sc-best{ margin:var(--space-md) var(--space-md) 0; }
+  .sc-best__head{ display:flex; align-items:center; gap:var(--space-sm); margin-bottom:var(--space-sm); }
+  /* شعلتان canon (موثوقية/تحقّق) — 44px لضمان هدف اللمس */
+  .sc-best__shield{ width:44px; height:44px; flex-shrink:0; color:var(--status-trust); }
+  .sc-best__store{ display:flex; align-items:center; gap:var(--space-sm); flex-wrap:wrap; }
+  .sc-best__price-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--space-md); margin-top:var(--space-sm); flex-wrap:wrap; }
+  .sc-best__save{ display:flex; flex-direction:column; align-items:flex-end; gap:2px; }
+  .sc-list{ margin:var(--space-lg) var(--space-md) 0; }
+  /* لا gap هنا — store-row+store-row في material_components.css تتكفّل بالمسافة */
+  .sc-list__rows{ display:flex; flex-direction:column; }
+  .sc-rank{ width:32px; height:32px; flex-shrink:0; display:inline-flex; align-items:center; justify-content:center;
+    border-radius:var(--radius-pill); background:var(--bg-input); color:var(--ink-secondary);
+    font-family:var(--font-ar-display); font-weight:900; font-size:var(--type-caption-size); font-variant-numeric:tabular-nums; }
+  .store-row--cheapest .sc-rank{ background:var(--status-trust-tint); color:var(--ink-primary); }
+  .sc-row-meta{ display:flex; align-items:center; gap:var(--space-xs); flex-wrap:wrap; }
+  /* هدف لمس لـconfidence-mini (tabindex=0) */
+  .store-row .confidence-mini{ min-height:var(--tap-min); padding-inline:var(--space-xs); display:inline-flex; align-items:center; }
+  /* تذييل: مسافة أسفل كافية لمنع القطع */
+  .sc-foot{ margin:var(--space-lg) var(--space-md) 0; padding-block-end:var(--space-xl); }
+</style>
+</head>
+<body><aside style="padding:12px;background:#241c0f;color:#ffe5a7;text-align:center;font:14px system-ui">Selected design demonstration · Example data · Not a live service</aside>
+<div class="app-frame app-frame--tall mo-page">
+
+  
+  <div class="status-bar">
+    <span class="status-bar__time bidi-num">٩:٤١</span>
+    <span class="status-bar__icons" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h.01M6 20v-4M10 20V12M14 20V8M18 20V4"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/></svg>
+    </span>
+  </div>
+
+  
+  <div class="app-frame__top">
+    <div class="app-topbar surface-solid">
+      <button class="icon-btn mo-press icon-flip" aria-label="رجوع" data-ar-label="رجوع" data-en-label="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <h1 class="app-topbar__title" data-ar="قارن المتاجر" data-en="Compare stores">قارن المتاجر</h1>
+      <span class="app-topbar__spacer"></span>
+      <button class="icon-btn mo-press" aria-label="مشاركة المقارنة" data-ar-label="مشاركة المقارنة" data-en-label="Share comparison">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  
+  <div class="sc-sub">
+    <span class="t-label" data-ar="المنتج" data-en="Product">المنتج</span>
+    <span class="t-title-md" data-ar="زيت دوّار الشمس — صفيحة ١٦ ل" data-en="Sunflower oil — 16 L tin">زيت دوّار الشمس — صفيحة ١٦ ل</span>
+    <span class="unit-chip"><span class="bidi-num">٥</span>&nbsp;<span data-ar="متاجر" data-en="stores">متاجر</span></span>
+  </div>
+
+  
+  <div class="sc-chips" role="group" aria-label="ترتيب المتاجر" data-ar-label="ترتيب المتاجر" data-en-label="Sort stores">
+    <button class="tag tag--neutral sc-chip-btn mo-press-sm" aria-pressed="false" data-ar="المنتج" data-en="Product">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h13M3 12h9M3 18h6"/></svg>
+      <span data-ar="المنتج" data-en="Product">المنتج</span>
+    </button>
+    <button class="tag sc-chip-btn mo-press-sm" aria-pressed="true" data-ar="الأرخص" data-en="Cheapest">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 8l10 8"/><path d="M17 8 7 16"/></svg>
+      <span data-ar="الأرخص" data-en="Cheapest">الأرخص</span>
+    </button>
+    <button class="tag tag--neutral sc-chip-btn mo-press-sm" aria-pressed="false" data-ar="الأقرب" data-en="Nearest">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span data-ar="الأقرب" data-en="Nearest">الأقرب</span>
+    </button>
+  </div>
+
+  
+  <div class="sc-best">
+    <div class="card--lg hero-card mo-scale-in">
+      <div class="sc-best__head">
+        <svg class="sc-best__shield mo-pulse-trust" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+        <div>
+          <div class="t-label" data-ar="أفضل سعر متاح" data-en="Best price available">أفضل سعر متاح</div>
+          <div class="sc-best__store">
+            <span class="t-title-md" data-ar="سوق الخير" data-en="Souq al-Khair">سوق الخير</span>
+            <span class="tag" data-ar="الأرخص" data-en="Cheapest">الأرخص</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="gap:var(--space-sm); color:var(--ink-tertiary)">
+        <span class="region-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span data-ar="درعا البلد" data-en="Daraa al-Balad">درعا البلد</span>
+        </span>
+        <span class="t-caption"><span class="bidi-num">١٫٢</span>&nbsp;<span data-ar="كم" data-en="km">كم</span></span>
+        <span class="dot-sep" aria-hidden="true"></span>
+        <span class="confidence-mini" tabindex="0">
+          <span class="confidence-mini__dot"></span>
+          <span data-ar="ثقة عالية" data-en="High trust">ثقة عالية</span>
+        </span>
+      </div>
+
+      <div class="sc-best__price-row">
+        <div class="price price--lg" data-demo="1" aria-label="٤٧٠ ل.س" data-ar-label="٤٧٠ ل.س" data-en-label="470 SYP">
+          <span class="price__value bidi-num">٤٧٠</span>
+          <span class="price__unit" data-ar="ل.س" data-en="SYP">ل.س</span>
+        </div>
+        <div class="sc-best__save">
+          <span class="freshness-chip" data-ar="توفير ٤٢ ل.س" data-en="Save 42 SYP">توفير&nbsp;<span class="bidi-num">٤٢</span>&nbsp;ل.س</span>
+          <span class="t-label" data-ar="مقابل أغلى متجر" data-en="vs. priciest store">مقابل أغلى متجر</span>
+        </div>
+      </div>
+
+      <hr class="hairline">
+
+      <button class="btn btn--primary btn--block mo-press" data-ar="اعرض تفاصيل المتجر" data-en="View store details">
+        <span data-ar="اعرض تفاصيل المتجر" data-en="View store details">اعرض تفاصيل المتجر</span>
+        <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  
+  <div class="sc-list">
+    <div class="section-head" style="margin-bottom:var(--space-sm)">
+      <h2 class="section-head__title" data-ar="كل المتاجر" data-en="All stores">كل المتاجر</h2>
+      <span class="t-label" data-ar="مرتّبة: الأرخص أوّلاً" data-en="Sorted: cheapest first">مرتّبة: الأرخص أوّلاً</span>
+    </div>
+
+    <div class="sc-list__rows mo-stagger">
+
+      
+      <div class="store-row store-row--cheapest" aria-label="سوق الخير — ٤٧٠ ل.س — الأرخص" data-ar-label="سوق الخير — ٤٧٠ ل.س — الأرخص" data-en-label="Souq al-Khair — 470 SYP — Cheapest">
+        <span class="sc-rank bidi-num" aria-hidden="true">١</span>
+        <div class="store-row__thumb" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="store-row__body">
+          <span class="store-row__name" data-ar="سوق الخير" data-en="Souq al-Khair">سوق الخير</span>
+          <span class="store-row__meta sc-row-meta">
+            <span data-ar="درعا البلد" data-en="Daraa al-Balad">درعا البلد</span>
+            <span class="dot-sep" aria-hidden="true"></span>
+            <span class="bidi-num">١٫٢</span>&nbsp;<span data-ar="كم" data-en="km">كم</span>
+          </span>
+        </div>
+        <div class="store-row__trailing">
+          <span class="price price--md" aria-label="٤٧٠ ل.س" data-ar-label="٤٧٠ ل.س" data-en-label="470 SYP">
+            <span class="price__value bidi-num">٤٧٠</span>
+            <span class="price__unit" data-ar="ل.س" data-en="SYP">ل.س</span>
+          </span>
+          <span class="confidence-mini" tabindex="0">
+            <span class="confidence-mini__dot"></span>
+            <span data-ar="عالية" data-en="High">عالية</span>
+          </span>
+        </div>
+      </div>
+
+      
+      <div class="store-row" aria-label="البيت الشامي — ٤٨٥ ل.س" data-ar-label="البيت الشامي — ٤٨٥ ل.س" data-en-label="Al-Bayt al-Shami — 485 SYP">
+        <span class="sc-rank bidi-num" aria-hidden="true">٢</span>
+        <div class="store-row__thumb" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="store-row__body">
+          <span class="store-row__name" data-ar="البيت الشامي" data-en="Al-Bayt al-Shami">البيت الشامي</span>
+          <span class="store-row__meta sc-row-meta">
+            <span data-ar="الميدان" data-en="Al-Maydan">الميدان</span>
+            <span class="dot-sep" aria-hidden="true"></span>
+            <span class="bidi-num">٢٫٠</span>&nbsp;<span data-ar="كم" data-en="km">كم</span>
+          </span>
+        </div>
+        <div class="store-row__trailing">
+          <span class="price price--md" aria-label="٤٨٥ ل.س" data-ar-label="٤٨٥ ل.س" data-en-label="485 SYP">
+            <span class="price__value bidi-num">٤٨٥</span>
+            <span class="price__unit" data-ar="ل.س" data-en="SYP">ل.س</span>
+          </span>
+          <span class="confidence-mini" tabindex="0">
+            <span class="confidence-mini__dot"></span>
+            <span data-ar="عالية" data-en="High">عالية</span>
+          </span>
+        </div>
+      </div>
+
+      
+      <div class="store-row" aria-label="بقالة طريق السد — ٤٩٠ ل.س" data-ar-label="بقالة طريق السد — ٤٩٠ ل.س" data-en-label="Al-Sadd Road Grocery — 490 SYP">
+        <span class="sc-rank bidi-num" aria-hidden="true">٣</span>
+        <div class="store-row__thumb" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="store-row__body">
+          <span class="store-row__name" data-ar="بقالة طريق السد" data-en="Al-Sadd Road Grocery">بقالة طريق السد</span>
+          <span class="store-row__meta sc-row-meta">
+            <span data-ar="طريق السد" data-en="Al-Sadd Road">طريق السد</span>
+            <span class="dot-sep" aria-hidden="true"></span>
+            <span class="bidi-num">٢٫٦</span>&nbsp;<span data-ar="كم" data-en="km">كم</span>
+          </span>
+        </div>
+        <div class="store-row__trailing">
+          <span class="price price--md" aria-label="٤٩٠ ل.س" data-ar-label="٤٩٠ ل.س" data-en-label="490 SYP">
+            <span class="price__value bidi-num">٤٩٠</span>
+            <span class="price__unit" data-ar="ل.س" data-en="SYP">ل.س</span>
+          </span>
+          <span class="confidence-mini confidence-mini--medium" tabindex="0">
+            <span class="confidence-mini__dot"></span>
+            <span data-ar="متوسطة" data-en="Medium">متوسطة</span>
+          </span>
+        </div>
+      </div>
+
+      
+      <div class="store-row" aria-label="سوق باب توما — ٤٩٨ ل.س" data-ar-label="سوق باب توما — ٤٩٨ ل.س" data-en-label="Bab Touma Market — 498 SYP">
+        <span class="sc-rank bidi-num" aria-hidden="true">٤</span>
+        <div class="store-row__thumb" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="store-row__body">
+          <span class="store-row__name" data-ar="سوق باب توما" data-en="Bab Touma Market">سوق باب توما</span>
+          <span class="store-row__meta sc-row-meta">
+            <span data-ar="المنشية" data-en="Al-Manshiya">المنشية</span>
+            <span class="dot-sep" aria-hidden="true"></span>
+            <span class="bidi-num">٣٫١</span>&nbsp;<span data-ar="كم" data-en="km">كم</span>
+          </span>
+        </div>
+        <div class="store-row__trailing">
+          <span class="price price--md" aria-label="٤٩٨ ل.س" data-ar-label="٤٩٨ ل.س" data-en-label="498 SYP">
+            <span class="price__value bidi-num">٤٩٨</span>
+            <span class="price__unit" data-ar="ل.س" data-en="SYP">ل.س</span>
+          </span>
+          <span class="confidence-mini confidence-mini--medium" tabindex="0">
+            <span class="confidence-mini__dot"></span>
+            <span data-ar="متوسطة" data-en="Medium">متوسطة</span>
+          </span>
+        </div>
+      </div>
+
+      
+      <div class="store-row" aria-label="مؤسسة حوران التجارية — ٥١٢ ل.س" data-ar-label="مؤسسة حوران التجارية — ٥١٢ ل.س" data-en-label="Houran Trading Co. — 512 SYP">
+        <span class="sc-rank bidi-num" aria-hidden="true">٥</span>
+        <div class="store-row__thumb" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="store-row__body">
+          <span class="store-row__name" data-ar="مؤسسة حوران التجارية" data-en="Houran Trading Co.">مؤسسة حوران التجارية</span>
+          <span class="store-row__meta sc-row-meta">
+            <span data-ar="الميدان" data-en="Al-Maydan">الميدان</span>
+            <span class="dot-sep" aria-hidden="true"></span>
+            <span class="bidi-num">٢٫٤</span>&nbsp;<span data-ar="كم" data-en="km">كم</span>
+          </span>
+        </div>
+        <div class="store-row__trailing">
+          <span class="price price--md" aria-label="٥١٢ ل.س" data-ar-label="٥١٢ ل.س" data-en-label="512 SYP">
+            <span class="price__value bidi-num">٥١٢</span>
+            <span class="price__unit" data-ar="ل.س" data-en="SYP">ل.س</span>
+          </span>
+          <span class="confidence-mini confidence-mini--low" tabindex="0">
+            <span class="confidence-mini__dot"></span>
+            <span data-ar="منخفضة" data-en="Low">منخفضة</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  
+  <div class="sc-foot">
+    <button class="btn btn--secondary btn--block mo-press" data-ar="اعرض الكلّ على الخريطة" data-en="Show all on map">
+      <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/></svg>
+      <span data-ar="اعرض الكلّ على الخريطة" data-en="Show all on map">اعرض الكلّ على الخريطة</span>
+    </button>
+    <p class="hero-card__source" style="text-align:center; margin:var(--space-sm) 0 0">
+      <span data-ar="آخر تحديث للأسعار قبل" data-en="Prices updated">آخر تحديث للأسعار قبل</span>&nbsp;<span class="bidi-num">٣</span>&nbsp;<span data-ar="ساعات" data-en="hours ago">ساعات</span>
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

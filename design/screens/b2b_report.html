@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl" data-theme="dark" class="tier-rich">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تقرير الاتجاهات L1 — نِبراس</title>
+<script>(function(){try{var p=new URLSearchParams(location.search),d=document.documentElement;var t=p.get('tier'),th=p.get('theme'),l=p.get('lang');if(t){d.className='tier-'+t;}if(th){d.setAttribute('data-theme',th);}if(l){d.setAttribute('lang',l);d.setAttribute('dir',l==='en'?'ltr':'rtl');}}catch(e){}})();</script>
+
+<link rel="stylesheet" href="../lib/fonts.css">
+<link rel="stylesheet" href="../material_tokens.css">
+<link rel="stylesheet" href="../material_components.css">
+<link rel="stylesheet" href="../material_screens.css">
+<link rel="stylesheet" href="../material_motion.css">
+<script src="../lib/switcher.js" defer></script>
+<style>
+  /* تخطيط ثانوي محليّ — var() فقط، صفر hex خام */
+
+  /* إعادة ضبط h2 داخل مكوّنات التخطيط المحلّية */
+  h2.rpt-chart-title { margin: 0; }
+
+  /* ── رأس التقرير (شارة L1 + تاريخ) ── */
+  .rpt-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-block-end: var(--space-md);
+  }
+  .rpt-badge-l1 {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 4px var(--space-md);
+    border-radius: var(--radius-pill);
+    background: var(--accent-brand-tint);
+    color: var(--accent-brand);
+    font-family: var(--font-ar-body);
+    font-size: var(--type-label-size);
+    font-weight: 700;
+    border: 1px solid var(--accent-brand);
+    white-space: nowrap;
+  }
+  .rpt-date {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-caption-size);
+    color: var(--ink-tertiary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── بطاقة الملخّص التنفيذي ── */
+  .exec-summary {
+    background: var(--bg-card);
+    border-radius: var(--radius-card);
+    box-shadow: var(--elev-2);
+    padding: var(--space-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .exec-summary::after {
+    content: '';
+    position: absolute;
+    inset-block-start: -60px;
+    inset-inline-end: -60px;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle at center, var(--accent-brand-tint) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .exec-summary > * { position: relative; z-index: 1; }
+  .exec-summary__icon {
+    width: 48px; height: 48px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: var(--radius-lg);
+    background: var(--accent-brand-tint);
+    color: var(--accent-brand);
+    margin-block-end: var(--space-md);
+  }
+  .exec-summary__icon svg { width: 28px; height: 28px; }
+  .exec-summary__title {
+    font-family: var(--font-ar-brand);
+    font-size: var(--type-title-large-size);
+    font-weight: 700;
+    color: var(--ink-primary);
+    margin-block-end: var(--space-sm);
+    line-height: 1.25;
+  }
+  .exec-summary__body {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-body-size);
+    color: var(--ink-secondary);
+    line-height: 1.65;
+    margin-block-end: var(--space-md);
+  }
+  .exec-summary__kpis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+  }
+  .exec-kpi {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-elevated);
+    border-radius: var(--radius-md);
+    border-inline-start: 3px solid var(--accent-brand);
+  }
+  .exec-kpi--up { border-inline-start-color: var(--status-trust); }
+  .exec-kpi--down { border-inline-start-color: var(--status-danger); }
+  .exec-kpi__label {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-label-size);
+    font-weight: 600;
+    color: var(--ink-tertiary);
+  }
+  .exec-kpi__value {
+    font-family: var(--font-ar-display);
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--ink-primary);
+    font-variant-numeric: tabular-nums;
+  }
+  .exec-kpi__delta {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-label-size);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-secondary);
+  }
+  .exec-kpi__delta .trend__sign { color: var(--status-trust); }
+  .exec-kpi--down .exec-kpi__delta .trend__sign { color: var(--status-danger); }
+
+  /* ── رأس بطاقة المخطّط ── */
+  .rpt-chart-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+  .rpt-chart-title {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-title-medium-size);
+    font-weight: var(--type-title-medium-weight);
+    color: var(--ink-primary);
+    line-height: var(--lh-title-medium);
+  }
+  .rpt-chart-sub {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-caption-size);
+    color: var(--ink-tertiary);
+    margin-block-start: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── sparkline بمقياس محاور ── */
+  .rpt-spark-wrap {
+    position: relative;
+    width: 100%;
+    height: 80px;
+  }
+  .rpt-spark-wrap svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+  }
+
+  /* ── أسطورة الألوان ── */
+  .rpt-legend {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+    flex-wrap: wrap;
+    margin-block-start: var(--space-sm);
+  }
+  .rpt-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-ar-body);
+    font-size: var(--type-label-size);
+    font-weight: 600;
+    color: var(--ink-secondary);
+  }
+  .rpt-legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    flex-shrink: 0;
+  }
+  .rpt-legend-dot--brand  { background: var(--accent-brand); }
+  .rpt-legend-dot--trust  { background: var(--status-trust); }
+  .rpt-legend-dot--warn   { background: var(--status-warn); }
+  .rpt-legend-dot--danger { background: var(--status-danger); }
+
+  /* ── مخطّط minibar + تسميات أحياء ── */
+  .rpt-bar-labels {
+    display: flex;
+    gap: 6px;
+    margin-block-start: var(--space-xs);
+  }
+  .rpt-bar-labels span {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    font-family: var(--font-ar-body);
+    font-size: var(--type-label-size);
+    font-weight: 600;
+    color: var(--ink-tertiary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .rpt-bar-labels span.is-peak { color: var(--ink-primary); }
+
+  /* ── جدول MEB ── */
+  .meb-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--elev-2);
+  }
+  .meb-table th,
+  .meb-table td {
+    padding: var(--space-sm) var(--space-md);
+    text-align: start;
+    font-family: var(--font-ar-body);
+    font-size: var(--type-caption-size);
+    border-block-end: 1px solid var(--line-hairline);
+    vertical-align: middle;
+  }
+  .meb-table th {
+    color: var(--ink-tertiary);
+    font-weight: 600;
+    background: var(--bg-surface);
+    font-size: var(--type-label-size);
+  }
+  .meb-table td { color: var(--ink-primary); }
+  .meb-table tr:last-child td { border-block-end: 0; }
+  .meb-table__price {
+    font-family: var(--font-ar-display);
+    font-weight: 900;
+    color: var(--accent-brand);
+    font-variant-numeric: tabular-nums;
+  }
+  .meb-table__unit {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-label-size);
+    font-weight: 600;
+    color: var(--ink-secondary);
+    margin-inline-start: 2px;
+  }
+  .meb-table__trend {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-label-size);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .meb-table__trend .trend__sign { color: var(--status-trust); }
+  .meb-table__trend--down .trend__sign { color: var(--status-danger); }
+  .meb-table__trend--flat .trend__sign { color: var(--ink-tertiary); }
+  .meb-row-head {
+    font-family: var(--font-ar-body);
+    font-weight: 700;
+    font-size: var(--type-caption-size);
+    color: var(--accent-brand);
+    background: var(--accent-brand-tint);
+    padding-block: var(--space-xs);
+    padding-inline: var(--space-md);
+    border-block-end: 1px solid var(--line-hairline);
+    letter-spacing: .2px;
+  }
+
+  /* ── بطاقة ملاحظة «عميل أوّل» ── */
+  .client-first-note {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--elev-1);
+    padding: var(--space-md);
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+    border-inline-start: 3px solid var(--accent-brand);
+  }
+  .client-first-note__icon {
+    width: 36px; height: 36px;
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: var(--radius-sm);
+    background: var(--accent-brand-tint);
+    color: var(--accent-brand);
+  }
+  .client-first-note__icon svg { width: 20px; height: 20px; }
+  .client-first-note__body {
+    flex: 1;
+    min-width: 0;
+  }
+  .client-first-note__title {
+    font-family: var(--font-ar-brand);
+    font-size: var(--type-body-size);
+    font-weight: 700;
+    color: var(--ink-primary);
+    margin-block-end: var(--space-xs);
+  }
+  .client-first-note__text {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-caption-size);
+    color: var(--ink-secondary);
+    line-height: 1.6;
+  }
+
+  /* ── قسم إجراءات التنزيل ── */
+  .rpt-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding-block: var(--space-md);
+  }
+  .rpt-dl-hint {
+    font-family: var(--font-ar-body);
+    font-size: var(--type-caption-size);
+    color: var(--ink-tertiary);
+    text-align: center;
+  }
+</style>
+</head>
+<body><aside style="padding:12px;background:#241c0f;color:#ffe5a7;text-align:center;font:14px system-ui">Selected design demonstration · Example data · Not a live service</aside>
+<div class="app-frame app-frame--tall mo-page">
+
+  
+  <div class="status-bar">
+    <span class="status-bar__time bidi-num">٩:٤١</span>
+    <span class="status-bar__icons" aria-hidden="true">
+      
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4v16"/></svg>
+      
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>
+      
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="6" width="18" height="12" rx="2"/><path d="M23 13v-2"/></svg>
+    </span>
+  </div>
+
+  
+  <div class="app-frame__top">
+    <div class="app-topbar" role="banner">
+      <h1 class="visually-hidden">تقرير اتجاهات الأسعار — نِبراس</h1>
+      <button class="icon-btn icon-flip" aria-label="رجوع" data-ar-label="رجوع" data-en-label="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <span class="app-topbar__title" data-ar="تقرير اتجاهات الأسعار" data-en="Price Trend Report">تقرير اتجاهات الأسعار</span>
+      <span class="app-topbar__spacer"></span>
+      <button class="icon-btn" aria-label="مشاركة التقرير" data-ar-label="مشاركة التقرير" data-en-label="Share report">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
+      </button>
+    </div>
+  </div>
+
+  
+  <div class="insights-board mo-stagger">
+
+    
+    <div class="rpt-meta screen-pad" style="padding-block-start:var(--space-sm)">
+      <span class="rpt-badge-l1" aria-label="مستوى التقرير L1" data-ar-label="مستوى التقرير L1" data-en-label="Report level L1">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        <span data-ar="L1 — أسعار" data-en="L1 — Prices">L1 — أسعار</span>
+      </span>
+      <span class="rpt-date bidi-num" data-ar="٥ يونيو ٢٠٢٦ · درعا وحوران" data-en="5 Jun 2026 · Daraa & Hauran">٥ يونيو ٢٠٢٦ · درعا وحوران</span>
+    </div>
+
+    
+    <section class="exec-summary screen-pad" aria-label="الملخّص التنفيذي" data-ar-label="الملخّص التنفيذي" data-en-label="Executive Summary">
+      
+      <div class="exec-summary__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 2.5 C10 7.5,15.5 9.5,15.25 14 C15.1 17.5,12.25 19.75,9.75 18.5 C12 18.1,13.5 16.5,13 13.75 C12.1 9.5,9.25 7,13.5 2.5 Z"/><path d="M10.5 21.5 C14 16.5,8.5 14.5,8.75 10 C8.9 6.5,11.75 4.25,14.25 5.5 C12 5.9,10.5 7.5,11 10.25 C11.9 14.5,14.75 17,10.5 21.5 Z" opacity=".5"/></svg>
+      </div>
+      <h2 class="exec-summary__title" data-ar="ملخّص تنفيذي — يونيو ٢٠٢٦" data-en="Executive Summary — June 2026">ملخّص تنفيذي — يونيو ٢٠٢٦</h2>
+      <p class="exec-summary__body" data-ar="ارتفعت أسعار المواد الغذائية الأساسية في درعا وحوران بمعدل ٤٫٢٪ خلال الشهر الماضي مقارنةً بنظيراتها في ريف دمشق. السكّر والزيت يُسجّلان أعلى ضغط سعري، فيما تراجع سعر البطاطا ٣٫١٪ بفعل موسم الحصاد. السوق يُبدي استقراراً نسبياً في الحبوب. جميع البيانات مُعتمَدة من ٤٧ مبلِّغاً في ٩ مناطق." data-en="Staple food prices in Daraa and Hauran rose by 4.2% over the past month compared to rural Damascus benchmarks. Sugar and oil show the highest price pressure, while potato prices dropped 3.1% due to harvest season. Grain markets show relative stability. All data verified from 47 reporters across 9 districts.">
+        ارتفعت أسعار المواد الغذائية الأساسية في درعا وحوران بمعدل ٤٫٢٪ خلال الشهر الماضي مقارنةً بنظيراتها في ريف دمشق. السكّر والزيت يُسجّلان أعلى ضغط سعري، فيما تراجع سعر البطاطا ٣٫١٪ بفعل موسم الحصاد. السوق يُبدي استقراراً نسبياً في الحبوب. جميع البيانات مُعتمَدة من ٤٧ مبلِّغاً في ٩ مناطق.
+      </p>
+      
+      <div class="exec-summary__kpis">
+        <div class="exec-kpi exec-kpi--up">
+          <span class="exec-kpi__label" data-ar="متوسط التضخّم الشهري" data-en="Monthly avg. inflation">متوسط التضخّم الشهري</span>
+          <span class="exec-kpi__value bidi-num" data-demo="1">٤٫٢٪</span>
+          <span class="exec-kpi__delta bidi-num"><span class="trend__sign">▲</span> مقارنةً بريف دمشق</span>
+        </div>
+        <div class="exec-kpi">
+          <span class="exec-kpi__label" data-ar="عدد السلع المرصودة" data-en="Monitored commodities">عدد السلع المرصودة</span>
+          <span class="exec-kpi__value bidi-num">٢٤</span>
+          <span class="exec-kpi__delta bidi-num">سلعة أساسية</span>
+        </div>
+        <div class="exec-kpi exec-kpi--up">
+          <span class="exec-kpi__label" data-ar="السكّر (ارتفاع)" data-en="Sugar (rising)">السكّر (ارتفاع)</span>
+          <span class="exec-kpi__value bidi-num">٧٫٨٪</span>
+          <span class="exec-kpi__delta bidi-num"><span class="trend__sign">▲</span> خلال ٣٠ يوماً</span>
+        </div>
+        <div class="exec-kpi exec-kpi--down">
+          <span class="exec-kpi__label" data-ar="البطاطا (تراجع)" data-en="Potato (falling)">البطاطا (تراجع)</span>
+          <span class="exec-kpi__value bidi-num">٣٫١٪</span>
+          <span class="exec-kpi__delta bidi-num exec-kpi--down"><span class="trend__sign" style="color:var(--status-danger)">▼</span> موسم الحصاد</span>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="chart-card mo-fade-up" aria-label="اتجاه أسعار السلع الرئيسية خلال ٣٠ يوماً" data-ar-label="اتجاه أسعار السلع الرئيسية خلال ٣٠ يوماً" data-en-label="Key commodity price trends over 30 days">
+      <div class="rpt-chart-head">
+        <div>
+          <h2 class="rpt-chart-title" data-ar="اتجاه أسعار السلع (٣٠ يوماً)" data-en="Commodity price trend (30 days)">اتجاه أسعار السلع (٣٠ يوماً)</h2>
+          <div class="rpt-chart-sub" data-ar="درعا المدينة · السكّر / الزيت / الطحين" data-en="Daraa city · Sugar / Oil / Flour">درعا المدينة · السكّر / الزيت / الطحين</div>
+        </div>
+        <span class="trend-up bidi-num" aria-label="ارتفاع ٤٫٢٪" data-ar-label="ارتفاع ٤٫٢٪" data-en-label="Up 4.2%">
+          <span class="trend__sign" aria-hidden="true">▲</span> ٤٫٢٪
+        </span>
+      </div>
+
+      
+      <div class="rpt-spark-wrap" role="img" aria-label="مخطّط خطّي لأسعار السكّر والزيت والطحين خلال ٣٠ يوماً" data-ar-label="مخطّط خطّي لأسعار السكّر والزيت والطحين خلال ٣٠ يوماً" data-en-label="Line chart of sugar, oil, and flour prices over 30 days">
+        <svg viewBox="0 0 300 80" preserveAspectRatio="none" aria-hidden="true">
+          
+          <line x1="0" y1="20" x2="300" y2="20" stroke="var(--line-hairline)" stroke-width="1"/>
+          <line x1="0" y1="40" x2="300" y2="40" stroke="var(--line-hairline)" stroke-width="1"/>
+          <line x1="0" y1="60" x2="300" y2="60" stroke="var(--line-hairline)" stroke-width="1"/>
+
+          
+          <defs>
+            <linearGradient id="grad-sugar" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--accent-brand)" stop-opacity="0.18"/>
+              <stop offset="100%" stop-color="var(--accent-brand)" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="grad-oil" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--status-warn)" stop-opacity="0.12"/>
+              <stop offset="100%" stop-color="var(--status-warn)" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <polyline
+            fill="url(#grad-sugar)"
+            stroke="none"
+            points="0,58 30,52 60,50 90,46 120,42 150,40 180,35 210,32 240,28 270,24 300,18"/>
+          
+          <polyline
+            fill="none"
+            stroke="var(--accent-brand)"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            points="0,58 30,52 60,50 90,46 120,42 150,40 180,35 210,32 240,28 270,24 300,18"/>
+          
+          <polyline
+            fill="none"
+            stroke="var(--status-warn)"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-dasharray="5 3"
+            points="0,62 30,60 60,59 90,58 120,56 150,54 180,52 210,50 240,48 270,46 300,43"/>
+          
+          <polyline
+            fill="none"
+            stroke="var(--status-trust)"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            points="0,65 30,65 60,64 90,63 120,63 150,64 180,63 210,62 240,63 270,62 300,61"/>
+          
+          <circle cx="300" cy="18" r="4" fill="var(--accent-brand)" stroke="var(--bg-card)" stroke-width="2"/>
+          
+          <circle cx="300" cy="43" r="3.5" fill="var(--status-warn)" stroke="var(--bg-card)" stroke-width="2"/>
+          
+          <circle cx="300" cy="61" r="3.5" fill="var(--status-trust)" stroke="var(--bg-card)" stroke-width="2"/>
+        </svg>
+      </div>
+
+      
+      <div class="rpt-legend" aria-hidden="true">
+        <span class="rpt-legend-item">
+          <span class="rpt-legend-dot rpt-legend-dot--brand"></span>
+          <span data-ar="سكّر" data-en="Sugar">سكّر</span>
+        </span>
+        <span class="rpt-legend-item">
+          <span class="rpt-legend-dot rpt-legend-dot--warn"></span>
+          <span data-ar="زيت" data-en="Oil">زيت</span>
+        </span>
+        <span class="rpt-legend-item">
+          <span class="rpt-legend-dot rpt-legend-dot--trust"></span>
+          <span data-ar="طحين" data-en="Flour">طحين</span>
+        </span>
+      </div>
+    </section>
+
+    
+    <section class="chart-card mo-fade-up" aria-label="مقارنة أسعار الأحياء في درعا وحوران" data-ar-label="مقارنة أسعار الأحياء في درعا وحوران" data-en-label="District price comparison in Daraa and Hauran">
+      <div class="rpt-chart-head">
+        <div>
+          <h2 class="rpt-chart-title" data-ar="مقارنة الأحياء (متوسط السلّة)" data-en="District comparison (basket avg.)">مقارنة الأحياء (متوسط السلّة)</h2>
+          <div class="rpt-chart-sub" data-ar="سلّة ٢٤ سلعة · ل.س / كغ مُعيَّر" data-en="Basket of 24 goods · SYP / std-kg">سلّة ٢٤ سلعة · ل.س / كغ مُعيَّر</div>
+        </div>
+        <span class="confidence-mini" aria-label="ثقة عالية" data-ar-label="ثقة عالية" data-en-label="High confidence" tabindex="0">
+          <span class="confidence-mini__dot" aria-hidden="true"></span>
+          <span data-ar="ثقة عالية" data-en="High confidence">ثقة عالية</span>
+          <svg class="confidence-mini__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      </div>
+
+      
+      <div class="minibar" role="img" aria-label="مقارنة أسعار ٧ مناطق في درعا وحوران، طفس الأعلى" data-ar-label="مقارنة أسعار ٧ مناطق في درعا وحوران، طفس الأعلى" data-en-label="Price comparison for 7 districts in Daraa and Hauran, Tafas highest">
+        
+        <div class="minibar__col"><i class="mo-bar" style="height:62%"></i></div>
+        
+        <div class="minibar__col"><i class="mo-bar" style="height:74%"></i></div>
+        
+        <div class="minibar__col"><i class="mo-bar" style="height:58%"></i></div>
+        
+        <div class="minibar__col minibar__col--peak"><i class="mo-bar" style="height:100%"></i></div>
+        
+        <div class="minibar__col"><i class="mo-bar" style="height:82%"></i></div>
+        
+        <div class="minibar__col"><i class="mo-bar" style="height:69%"></i></div>
+        
+        <div class="minibar__col"><i class="mo-bar" style="height:55%"></i></div>
+      </div>
+      <div class="rpt-bar-labels" aria-hidden="true">
+        <span data-ar="بانياس" data-en="Banyas">بانياس</span>
+        <span data-ar="درعا" data-en="Daraa">درعا</span>
+        <span data-ar="إزرع" data-en="Izra'">إزرع</span>
+        <span class="is-peak" data-ar="طفس" data-en="Tafas">طفس</span>
+        <span data-ar="الصنمين" data-en="As-Sanamayn">الصنمين</span>
+        <span data-ar="نوى" data-en="Nawa">نوى</span>
+        <span data-ar="خ.غزالة" data-en="Kh.Ghaz.">خ.غزالة</span>
+      </div>
+    </section>
+
+    
+    <section class="screen-pad mo-fade-up" aria-label="جدول سلّة الإنفاق الأدنى MEB" data-ar-label="جدول سلّة الإنفاق الأدنى MEB" data-en-label="Minimum Expenditure Basket MEB table">
+      <div class="section-head" style="margin-block-end:var(--space-sm)">
+        <h2 class="section-head__title" data-ar="سلّة الإنفاق الأدنى (MEB)" data-en="Minimum Expenditure Basket (MEB)">سلّة الإنفاق الأدنى (MEB)</h2>
+        <span class="rpt-date bidi-num" data-ar="يونيو ٢٠٢٦" data-en="Jun 2026">يونيو ٢٠٢٦</span>
+      </div>
+
+      <div class="x-scroll">
+      <table class="meb-table" aria-label="جدول أسعار سلّة الإنفاق الأدنى لمحافظة درعا" data-ar-label="جدول أسعار سلّة الإنفاق الأدنى لمحافظة درعا" data-en-label="Minimum Expenditure Basket price table for Daraa Governorate">
+        <thead>
+          <tr>
+            <th scope="col" data-ar="السلعة" data-en="Commodity">السلعة</th>
+            <th scope="col" data-ar="الوحدة" data-en="Unit">الوحدة</th>
+            <th scope="col" data-ar="السعر (ل.س)" data-en="Price (SYP)">السعر (ل.س)</th>
+            <th scope="col" data-ar="التغيّر" data-en="Change">التغيّر</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr><td class="meb-row-head" colspan="4" data-ar="حبوب ودقيق" data-en="Grains & Flour">حبوب ودقيق</td></tr>
+          <tr>
+            <td data-ar="طحين قمح" data-en="Wheat flour">طحين قمح</td>
+            <td class="bidi-num" data-ar="١ كغ" data-en="1 kg">١ كغ</td>
+            <td><span class="meb-table__price bidi-num">٧٢</span><span class="meb-table__unit" data-ar="ل.س" data-en="SYP">ل.س</span></td>
+            <td><span class="meb-table__trend bidi-num"><span class="trend__sign">▲</span> ١٫٢٪</span></td>
+          </tr>
+          <tr>
+            <td data-ar="برغل خشن" data-en="Coarse bulgur">برغل خشن</td>
+            <td class="bidi-num" data-ar="١ كغ" data-en="1 kg">١ كغ</td>
+            <td><span class="meb-table__price bidi-num">٥٨</span><span class="meb-table__unit" data-ar="ل.س" data-en="SYP">ل.س</span></td>
+            <td><span class="meb-table__trend meb-table__trend--flat bidi-num"><span class="trend__sign">—</span> ٠٪</span></td>
+          </tr>
+          <tr>
+            <td data-ar="رز بلدي" data-en="Local rice">رز بلدي</td>
+            <td class="bidi-num" data-ar="١ كغ" data-en="1 kg">١ كغ</td>
+            <td><span class="meb-table__price bidi-num">١٢٥</span><span class="meb-table__unit" data-ar="ل.س" data-en="SYP">ل.س</span></td>
+            <td><span class="meb-table__trend bidi-num"><span class="trend__sign">▲</span> ٢٫٤٪</span></td>
+          </tr>
+
+          
+          <tr><td class="meb-row-head" colspan="4" data-ar="زيوت وسكّر" data-en="Oils & Sugar">زيوت وسكّر</td></tr>
+          <tr>
+            <td data-ar="زيت نباتي" data-en="Vegetable oil">زيت نباتي</td>
+            <td class="bidi-num" data-ar="١ ل" data-en="1 L">١ ل</td>
+            <td><span class="meb-table__price bidi-num">٢٢٠</span><span class="meb-table__unit" data-ar="ل.س" data-en="SYP">ل.س</span></td>
+            <td><span class="meb-table__trend bidi-num"><span class="trend__sign">▲</span> ٥٫١٪</span></td>
+          </tr>
+          <tr>
+            <td data-ar="سكّر أبيض" data-en="White sugar">سكّر أبيض</td>
+            <td class="bidi-num" data-ar="١ كغ" data-en="1 kg">١ كغ</td>
+            <td><span class="meb-table__price bidi-num">٦٣</span><span class="meb-table__unit" data-ar="ل.س" data-en="SYP">ل.س</span></td>
+            <td><span class="meb-table__trend bidi-num"><span class="trend__sign">▲</span> ٧٫٨٪</span></td>
+          </tr>
+
+          
+          <tr><td class="meb-row-head" colspan="4" data-ar="بقوليات" data-en="Legumes">بقوليات</td></tr>
+          <tr>
+            <td data-ar="عدس أصفر" data-en="Yellow lentils">عدس أصفر</td>
+            <td class="bidi-num" data-ar="١ كغ" data-en="1 kg">١ كغ</td>
+            <td><span class="meb-table__price bidi-num">٨٢</span><span class="meb-table__unit" data-ar="ل.س" data-en="SYP">ل.س</span></td>
+            <td><span class="meb-table__trend bidi-num"><span class="trend__sign">▲</span> ١٫٩٪</span></td>
+          </tr>
+          <tr>
+            <td data-ar="فول مجفّف" data-en="Dried fava">فول مجفّف</td>
+            <td class="bidi-num" data-ar="١ كغ" data-en="1 kg">١ كغ</td>
+            <td><span class="meb-table__price bidi-num">٦٩</span><span class="meb-table__unit" data-ar="ل.س" data-en="SYP">ل.س</span></td>
+            <td><span class="meb-table__trend meb-table__trend--flat bidi-num"><span class="trend__sign">—</span> ٠٪</span></td>
+          </tr>
+
+          
+          <tr><td class="meb-row-head" colspan="4" data-ar="خضروات" data-en="Vegetables">خضروات</td></tr>
+          <tr>
+            <td data-ar="بطاطا حورانية" data-en="Haurani potato">بطاطا حورانية</td>
+            <td class="bidi-num" data-ar="١ كغ" data-en="1 kg">١ كغ</td>
+            <td><span class="meb-table__price bidi-num">٣١</span><span class="meb-table__unit" data-ar="ل.س" data-en="SYP">ل.س</span></td>
+            <td><span class="meb-table__trend meb-table__trend--down bidi-num"><span class="trend__sign" style="color:var(--status-danger)">▼</span> ٣٫١٪</span></td>
+          </tr>
+          <tr>
+            <td data-ar="طماطم طازجة" data-en="Fresh tomatoes">طماطم طازجة</td>
+            <td class="bidi-num" data-ar="١ كغ" data-en="1 kg">١ كغ</td>
+            <td><span class="meb-table__price bidi-num">٤٥</span><span class="meb-table__unit" data-ar="ل.س" data-en="SYP">ل.س</span></td>
+            <td><span class="meb-table__trend meb-table__trend--down bidi-num"><span class="trend__sign" style="color:var(--status-danger)">▼</span> ١٫٦٪</span></td>
+          </tr>
+          <tr>
+            <td data-ar="بصل أصفر" data-en="Yellow onion">بصل أصفر</td>
+            <td class="bidi-num" data-ar="١ كغ" data-en="1 kg">١ كغ</td>
+            <td><span class="meb-table__price bidi-num">٢٨</span><span class="meb-table__unit" data-ar="ل.س" data-en="SYP">ل.س</span></td>
+            <td><span class="meb-table__trend bidi-num"><span class="trend__sign">▲</span> ٠٫٨٪</span></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2" style="font-weight:700;color:var(--ink-primary);font-family:var(--font-ar-body)" data-ar="إجمالي سلّة MEB (شهري)" data-en="MEB basket total (monthly)">إجمالي سلّة MEB (شهري)</td>
+            <td colspan="2">
+              <span class="meb-table__price bidi-num" style="font-size:17px" data-demo="1">٦٬٨٥٠</span>
+              <span class="meb-table__unit" data-ar="ل.س / أسرة" data-en="SYP / family">ل.س / أسرة</span>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      </div>
+    </section>
+
+    
+    <section class="screen-pad mo-fade-up" aria-label="ملاحظة منهجية: نموذج العميل الأوّل" data-ar-label="ملاحظة منهجية: نموذج العميل الأوّل" data-en-label="Methodological note: paying-client-first model">
+      <div class="client-first-note">
+        <div class="client-first-note__icon" aria-hidden="true">
+          
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 2.5 C10 7.5,15.5 9.5,15.25 14 C15.1 17.5,12.25 19.75,9.75 18.5 C12 18.1,13.5 16.5,13 13.75 C12.1 9.5,9.25 7,13.5 2.5 Z"/><path d="M10.5 21.5 C14 16.5,8.5 14.5,8.75 10 C8.9 6.5,11.75 4.25,14.25 5.5 C12 5.9,10.5 7.5,11 10.25 C11.9 14.5,14.75 17,10.5 21.5 Z" opacity=".5"/></svg>
+        </div>
+        <div class="client-first-note__body">
+          <div class="client-first-note__title" data-ar="نموذج: عميل أوّل يدفع — لا مانح يملك القرار" data-en="Model: Paying client first — no donor ownership">نموذج: عميل أوّل يدفع — لا مانح يملك القرار</div>
+          <p class="client-first-note__text" data-ar="هذا التقرير مُنتَج تجاري مدفوع من اشتراكات المؤسسات المحلية (جمعيات، تجار جملة، وحدات حوكمة). المانحون والمنظمات الإنسانية يمكنهم الوصول إلى نسخة متأخّرة ٤٨ ساعة — دون أن يملكوا توجيه منهجية الجمع أو أولويات البيانات. الاستقلالية التحريرية والمنهجية تبقى كاملة لنِبراس وعملائها الأوائل." data-en="This report is a commercial product paid for by local institutional subscribers (associations, wholesalers, governance units). Donors and humanitarian organisations may access a 48-hour delayed version — without ownership over collection methodology or data priorities. Editorial and methodological independence remains fully with Nibras and its paying clients.">
+            هذا التقرير مُنتَج تجاري مدفوع من اشتراكات المؤسسات المحلية (جمعيات، تجار جملة، وحدات حوكمة). المانحون والمنظمات الإنسانية يمكنهم الوصول إلى نسخة متأخّرة ٤٨ ساعة — دون أن يملكوا توجيه منهجية الجمع أو أولويات البيانات. الاستقلالية التحريرية والمنهجية تبقى كاملة لنِبراس وعملائها الأوائل.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    
+    <div class="screen-pad rpt-actions">
+      <button
+        class="btn btn--primary btn--block btn--lg is-disabled"
+        disabled
+        aria-label="تنزيل التقرير بصيغة PDF (غير متاح بعد)"
+        aria-disabled="true"
+        data-ar-label="تنزيل التقرير PDF"
+        data-en-label="Download PDF Report"
+      >
+        <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span data-ar="تنزيل PDF" data-en="Download PDF">تنزيل PDF</span>
+      </button>
+      <p class="rpt-dl-hint" data-ar="التنزيل متاح للمشتركين المؤسسيين (L1+)" data-en="Download available for institutional subscribers (L1+)">التنزيل متاح للمشتركين المؤسسيين (L1+)</p>
+    </div>
+
+  </div>
+
+  
+  <div class="app-frame__bottom">
+    <nav class="bottom-nav" aria-label="التنقّل الرئيسي" data-ar-label="التنقّل الرئيسي" data-en-label="Main navigation">
+      <button class="nav-cell" aria-label="الرئيسية" data-ar-label="الرئيسية" data-en-label="Home">
+        <svg class="nav-cell__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="nav-cell__label" data-ar="الرئيسية" data-en="Home">الرئيسية</span>
+      </button>
+      <button class="nav-cell" aria-label="الأسواق" data-ar-label="الأسواق" data-en-label="Markets">
+        <svg class="nav-cell__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="nav-cell__label" data-ar="الأسواق" data-en="Markets">الأسواق</span>
+      </button>
+      <button class="nav-cell nav-cell--active" aria-label="التقارير — الصفحة الحالية" aria-current="page" data-ar-label="التقارير" data-en-label="Reports">
+        <svg class="nav-cell__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        <span class="nav-cell__label" data-ar="التقارير" data-en="Reports">التقارير</span>
+      </button>
+      <button class="nav-cell" aria-label="الإعدادات" data-ar-label="الإعدادات" data-en-label="Settings">
+        <svg class="nav-cell__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="nav-cell__label" data-ar="الإعدادات" data-en="Settings">الإعدادات</span>
+      </button>
+      
+      <span class="nav-indicator" aria-hidden="true" style="inset-inline-end:calc(25% * 1 + 12.5% - 12px)"></span>
+    </nav>
+  </div>
+
+</div>
+</body>
+</html>
